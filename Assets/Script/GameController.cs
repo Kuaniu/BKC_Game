@@ -8,12 +8,12 @@ public class GameController : MonoBehaviour
     [Header("°ó¶¨×é¼þ")]
     public GameObject Monster;
     public GameObject[] spawn;
-    private float delayTime;
+    //private float delayTime;
     private int flag;
     void Start()
     {
         StartCoroutine("GenerateMonsters");
-        delayTime = 0.1f;
+        //delayTime = 0.1f;
         flag = 0;
     }
 

@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public float PlayerMoveSpeed;
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -17,6 +17,14 @@ public class PlayerController : MonoBehaviour
         //角色移动控制
         float H = Input.GetAxis("Horizontal");
         float V = Input.GetAxis("Vertical");
-        transform.Translate(new Vector2(H * PlayerMoveSpeed *Time.deltaTime, V * PlayerMoveSpeed*Time.deltaTime));
+        transform.Translate(new Vector2(H * PlayerMoveSpeed * Time.deltaTime, V * PlayerMoveSpeed * Time.deltaTime));
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //若角色碰到怪物则扣血
+        GetComponent<HPcontroller>().BuckleBlood(1);
+
+    }
+
 }

@@ -4,19 +4,23 @@ using UnityEngine;
 
 public class MonsterController : MonoBehaviour
 {
-    [Header("怪物移动速度")]
-    public float monsterMoveSpeed;
-
-    private bool contact;
     private Transform player;
+    private bool contact;
 
-
+    //基本参数
+    [Header("移动速度")]
+    public float monsterMoveSpeed;
+    [Header("生命值")]
+    public float MonsterHP;
+    //[Header("攻击力")]
+    //public float Damage;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         contact = false;
+        GameObject.Find("GameController").GetComponent<GameController>().MonsterListAdd(gameObject);
+        MonsterHP = 3;
     }
-
     void Update()
     {
         //若未接触角色则朝着玩家位置前进
@@ -31,9 +35,10 @@ public class MonsterController : MonoBehaviour
         {
             contact = true;
         }
-        //控制怪物之间的距离
-
-
+        else
+        {
+            //控制怪物之间的距离
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -41,7 +46,14 @@ public class MonsterController : MonoBehaviour
         {
             contact = false;
         }
+        else
+        {
+            //控制怪物之间的距离
+        }
     }
-
+    //public float GetDamage()
+    //{
+    //    return Damage;
+    //}
 
 }

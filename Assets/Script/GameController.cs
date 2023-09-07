@@ -8,7 +8,7 @@ public class GameController : MonoBehaviour
     [Header("°ó¶¨×é¼þ")]
     public GameObject Monster;
     public GameObject[] spawn;
-    //private float delayTime;
+    public List<GameObject> listTemp;
     private int flag;
     void Start()
     {
@@ -20,7 +20,11 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
+    }
+    public void MonsterListAdd(GameObject Monster)
+    {
+        listTemp.Add(Monster);
     }
     IEnumerator GenerateMonsters()
     {

@@ -6,6 +6,7 @@ using UnityEngine.UI;//HP的调用需要引用的UI源文件
 
 public class HPcontroller : MonoBehaviour
 {
+    [Header("绑定组件")]
     public Slider PlayerHP;
 
     void Start()
@@ -23,9 +24,7 @@ public class HPcontroller : MonoBehaviour
             PlayerHP.gameObject.SetActive(false);//隐藏血条UI
             Time.timeScale = 0;
             //播放死亡动画，切换场景/弹出菜单
-            //Destroy(gameObject);
         }
-        
         //测试血条变化
         if (Input.GetKeyDown(KeyCode.N))
         {
@@ -37,14 +36,14 @@ public class HPcontroller : MonoBehaviour
         }
     }
 
-    //加血方法
-    public void AddBlood(float increase)
+    //加血方法主角
+    public void PlayerAdd(float increase)
     {
         PlayerHP.value += increase * 0.1f;
     }
 
-    //扣血方法
-    public  void BuckleBlood(float reduce)
+    //扣血方法主角
+    public  void PlayerBuckle(float reduce)
     {
         PlayerHP.value -= reduce * 0.1f;
     }

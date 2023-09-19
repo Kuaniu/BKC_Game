@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class MonsterController : MonoBehaviour
@@ -23,22 +24,29 @@ public class MonsterController : MonoBehaviour
     }
     void Update()
     {
+
         //若未接触角色则朝着玩家位置前进
         if(!contact)
         {
             transform.position = Vector3.MoveTowards(transform.position, player.position, monsterMoveSpeed * Time.deltaTime);
         }
+
+
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            print("角色与怪物发生碰撞");
             contact = true;
         }
-        else
+        if (collision.gameObject.CompareTag("Bull"))
         {
-            //控制怪物之间的距离
+            Destroy(gameObject);
+
         }
+        
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -46,14 +54,6 @@ public class MonsterController : MonoBehaviour
         {
             contact = false;
         }
-        else
-        {
-            //控制怪物之间的距离
-        }
     }
-    //public float GetDamage()
-    //{
-    //    return Damage;
-    //}
-
+    
 }

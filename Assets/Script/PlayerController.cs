@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
     //[Header("攻击力")]
     //public float Damage;
 
-    public GameObject bullpos;
     void Start()
     {
         PlayerHP.value = 1;
@@ -36,8 +35,7 @@ public class PlayerController : MonoBehaviour
             Time.timeScale = 0;
             //播放死亡动画，切换场景/弹出菜单
         }
-
-        bullpos=GetNearestGameObject(GameObject.Find("GameController").GetComponent<GameController>().listTemp);
+        
 
         //测试血条变化
         if (Input.GetKeyDown(KeyCode.N))
@@ -50,30 +48,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    GameObject GetNearestGameObject(List<GameObject> listTemp)
-    {
-        
-        if (listTemp != null && listTemp.Count > 0)
-        {
-            GameObject targetTemp = listTemp.Count > 0 ? listTemp[0] : null;
-            float dis = Vector3.Distance(transform.position, listTemp[0].transform.position);
-            float disTemp;
-            for (int i = 1; i < listTemp.Count; i++)
-            {
-                disTemp = Vector3.Distance(transform.position, listTemp[i].transform.position);
-                if (disTemp < dis)
-                {
-                    targetTemp = listTemp[i];
-                    dis = disTemp;
-                }
-            }
-            return targetTemp;
-        }
-        else
-        {
-            return null;
-        }
-    }
+
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

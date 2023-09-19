@@ -10,10 +10,12 @@ public class GameController : MonoBehaviour
     public GameObject[] spawn;
     public List<GameObject> listTemp;
     private int flag;
+    private float TheTime;
     void Start()
     {
+        TheTime = 1;
+        StartCoroutine("Time");
         StartCoroutine("GenerateMonsters");
-        //delayTime = 0.1f;
         flag = 0;
     }
 
@@ -26,16 +28,34 @@ public class GameController : MonoBehaviour
     {
         listTemp.Add(Monster);
     }
+    IEnumerator Time()
+    {
+
+        while (true)
+        {
+            //需要重复执行的代码就放于在此处
+            if(TheTime>0.1f)
+            {
+                TheTime -= 0.1f;
+
+            }
+            print(TheTime);
+            //设置间隔时间为1秒
+            yield return new WaitForSeconds(30f);
+
+        }
+    }
     IEnumerator GenerateMonsters()
     {
 
         while (true)
         {
             //需要重复执行的代码就放于在此处
+
             flag = Random.Range(0, 12);
             Instantiate(Monster, spawn[flag].transform);
             //设置间隔时间为1秒
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(TheTime);
 
         }
     }

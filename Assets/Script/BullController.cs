@@ -5,24 +5,14 @@ using UnityEngine;
 
 public class BullController : MonoBehaviour
 {
+    //ÎäÆ÷¹¥»÷ÉËº¦
     //public float BullDamage = 1;
-    private float BullMoveSpeed = 10;
-    //private Vector3 target;
-    void Start()
+    //ÎäÆ÷Ðý×ªËÙ¶È
+    private float BullMoveSpeed = 50;
+    private void FixedUpdate()
     {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //transform.Rotate(Vector3.forward,10f);
+        //ÎäÆ÷Î§ÈÆÍæ¼ÒÐý×ª
         transform.RotateAround(transform.parent.position, Vector3.forward, BullMoveSpeed);
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Bull"))
-        {
-            Destroy(gameObject);
-        }
+
     }
 }

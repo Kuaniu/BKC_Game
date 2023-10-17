@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3269408366778684319}
   - component: {fileID: 1615626168026130351}
   m_Layer: 0
-  m_Name: Monster
+  m_Name: Bird
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,7 +89,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!114 &6688964301340595227
 MonoBehaviour:
   m_ObjectHideFlags: 0

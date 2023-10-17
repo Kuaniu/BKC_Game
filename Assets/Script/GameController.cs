@@ -6,11 +6,11 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     [Header("绑定组件")]
-    public GameObject Monster;
+    public GameObject Bird;
+    public GameObject Scarecrow;
     public GameObject[] spawn;
-    public List<GameObject> listTemp;
+    //public List<GameObject> listTemp;
     private int flag;
-    private Vector2 monsterPos;
     private float TheTime;
     void Start()
     {
@@ -19,16 +19,14 @@ public class GameController : MonoBehaviour
         StartCoroutine("GenerateMonsters");
         flag = 0;
     }
-
-    // Update is called once per frame
     void Update()
     {
         
     }
-    public void MonsterListAdd(GameObject Monster)
-    {
-        listTemp.Add(Monster);
-    }
+    //public void MonsterListAdd(GameObject Monster)//将Monster加入列表里
+    //{
+    //    listTemp.Add(Monster);
+    //}
     IEnumerator Time()
     {
 
@@ -40,9 +38,9 @@ public class GameController : MonoBehaviour
                 TheTime -= 0.1f;
 
             }
-            print(TheTime);
+            //print(TheTime);
             //设置间隔时间为1秒
-            yield return new WaitForSeconds(30f);
+            yield return new WaitForSeconds(5f);
 
         }
     }
@@ -52,10 +50,21 @@ public class GameController : MonoBehaviour
         while (true)
         {
             //需要重复执行的代码就放于在此处
-
-            flag = Random.Range(0, 12);
+            print(TheTime);
             //生成怪物
-            Instantiate(Monster, spawn[flag].transform.position,Quaternion.identity,gameObject.transform);
+            if (TheTime>=0.9f)
+            {
+                flag = Random.Range(0, 12);
+                Instantiate(Bird, spawn[flag].transform.position, Quaternion.identity, gameObject.transform);
+            }
+            else
+            {
+                flag = Random.Range(0, 12);
+                Instantiate(Bird, spawn[flag].transform.position, Quaternion.identity, gameObject.transform);
+                flag = Random.Range(0, 12);
+                Instantiate(Scarecrow, spawn[flag].transform.position, Quaternion.identity, gameObject.transform);
+            }
+
             //设置间隔时间为1秒
             yield return new WaitForSeconds(TheTime);
 

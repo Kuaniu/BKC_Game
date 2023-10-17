@@ -26,7 +26,10 @@ public class MonsterController : MonoBehaviour
     {
         //获取角色的transform
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        GameObject.Find("GameController").GetComponent<GameController>().MonsterListAdd(gameObject);
+
+        //把本身加入GameController中的怪物列表里
+        //GameObject.Find("GameController").GetComponent<GameController>().MonsterListAdd(gameObject);
+
         //获取怪物Renderer
         monsterRenderer = GetComponent<SpriteRenderer>();
         //怪物初始血量为3
@@ -37,7 +40,7 @@ public class MonsterController : MonoBehaviour
         //怪物向量追踪
         if (!contact)
         {
-            transform.position = Vector3.MoveTowards(transform.position, player.position, monsterMoveSpeed * Time.deltaTime);
+           transform.position = Vector3.MoveTowards(transform.position, player.position, monsterMoveSpeed * Time.deltaTime);
         }
     }
     void Update()
@@ -53,7 +56,8 @@ public class MonsterController : MonoBehaviour
             monsterRenderer.flipX = false;
         }
 
-
+        //靠下的怪物显示在前面
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -73,9 +77,8 @@ public class MonsterController : MonoBehaviour
                 Destroy(gameObject);
 
                 //获取游戏时间，时间越久最高经验球掉落概率越大
-                Quaternion quaternion = Quaternion.identity;            
                 //掉落经验xpPrefab
-                Instantiate(xpPrefab,gameObject.transform.position,quaternion);
+                Instantiate(xpPrefab,new Vector3(transform.position.x, transform.position.y,0), Quaternion.identity);
             }
         }
 

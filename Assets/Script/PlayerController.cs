@@ -6,8 +6,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.UI;//HP的调用需要引用的UI源文件
-//using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
-
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,9 +13,10 @@ public class PlayerController : MonoBehaviour
     public float PlayerMoveSpeed;
     [Header("生命值")]
     public Slider PlayerHP;
+    public float HPcount=10;
     //[Header("攻击力")]
     //public float Damage;
-
+    //经验值
     private float Experience;
 
     void Start()
@@ -39,11 +38,12 @@ public class PlayerController : MonoBehaviour
         //若角色碰到怪物则扣血
         if (collision.gameObject.CompareTag("Monster"))
         {
-            PlayerHP.value -= 0.1f;
+            PlayerHP.value -= collision.GetComponent<MonsterController>().Damage / HPcount;
         }
     }
     private void OnTriggerStay2D(Collider2D collision)//触发器接触检测
     {
+        //经验球功能
         //经验球与角色距离<=1.5则经验球向角色飞行
         if (collision.gameObject.CompareTag("Experience") && Vector3.Distance(collision.transform.position, transform.position) <= 1.5f)
         {

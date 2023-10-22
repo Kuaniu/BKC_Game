@@ -6,13 +6,12 @@ using UnityEngine;
 public class BullController : MonoBehaviour
 {
     //ÎäÆ÷¹¥»÷ÉËº¦
-    //public float BullDamage = 1;
+    public float BullDamage = 2;
     //ÎäÆ÷Ğı×ªËÙ¶È
-    private float BullMoveSpeed = 50;
+    public float BullMoveSpeed = 10;
     private void FixedUpdate()
     {
         //ÎäÆ÷Î§ÈÆÍæ¼ÒĞı×ª
         transform.RotateAround(transform.parent.position, Vector3.forward, BullMoveSpeed);
-
     }
 }

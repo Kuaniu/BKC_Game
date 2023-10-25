@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Timeline;
@@ -13,16 +14,20 @@ public class PlayerController : MonoBehaviour
     public float PlayerMoveSpeed;
     [Header("生命值")]
     public Slider PlayerHP;
-    public float HPcount=10;
+    public float HPcount;
+
     //[Header("攻击力")]
     //public float Damage;
     //经验值
     private float Experience;
+    //角色等级
+    private double CharacterLevel;
 
     void Start()
     {
         PlayerHP.value = 1;
         Experience = 0;
+        CharacterLevel = 0;
     }
     //物理运动更新
     private void FixedUpdate()
@@ -32,7 +37,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         playerHp();
+        UpdateCharacterLevel();
     }
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //若角色碰到怪物则扣血
@@ -83,5 +91,9 @@ public class PlayerController : MonoBehaviour
         {
             PlayerHP.value += 0.1f;
         }
+    }
+    void UpdateCharacterLevel()//更新角色等级
+    {
+        CharacterLevel = Math.Log(Experience, 2);
     }
 }

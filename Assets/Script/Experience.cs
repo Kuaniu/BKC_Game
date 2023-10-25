@@ -13,6 +13,7 @@ public class Experience : MonoBehaviour
         Invoke("DestroyGameObject", 60);
 
     }
+
     private void DestroyGameObject()//É¾³ý×ÔÉí
     {
         print("É¾³ý");

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using UnityEditorInternal.VersionControl;
 using UnityEngine;
 
 public class MonsterController : MonoBehaviour
@@ -24,13 +25,14 @@ public class MonsterController : MonoBehaviour
     public GameObject xpPrefab;
     [Header("攻击力")]
     public float Damage;
+
     void Start()
     {
         //获取角色的transform
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
         //把本身加入GameController中的怪物列表里
-        //GameObject.Find("GameController").GetComponent<GameController>().MonsterListAdd(gameObject);
+        GameObject.Find("GameController").GetComponent<GameController>().MonsterListAdd(transform);
 
         //获取怪物Renderer
         monsterRenderer = GetComponent<SpriteRenderer>();
@@ -42,6 +44,8 @@ public class MonsterController : MonoBehaviour
     {
         //怪物向量追踪
         VectorTracing();
+        //怪物距离检测
+        DistanceTracing();
     }
     void Update()
     {
@@ -63,16 +67,17 @@ public class MonsterController : MonoBehaviour
             print("角色与怪物发生碰撞");
             contact = true;
         }
-        //碰到武器Bull检测
+        //碰到武器Boomerang检测
         if (collision.gameObject.CompareTag("Bull"))
         {
-            MonsterHP -= GameObject.Find("Bullet").GetComponent<BullController>().BullDamage;
+            MonsterHP -= collision.GetComponent<BoomerangController>().BoomerangDamage;
             StartCoroutine(monsterShake());
             //怪物血量小于等于0则删除
             if (MonsterHP <= 0)
             {
+                //出列
+                GameObject.Find("GameController").GetComponent<GameController>().listTemp.Remove(transform);
                 Destroy(gameObject);
-
                 //获取游戏时间，时间越久最高经验球掉落概率越大
                 //掉落经验xpPrefab
                 Instantiate(xpPrefab, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
@@ -93,7 +98,15 @@ public class MonsterController : MonoBehaviour
     {
         if (!contact&&isMove)
         {
-            transform.position = Vector3.MoveTowards(transform.position, player.position, monsterMoveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position,player.position, monsterMoveSpeed * Time.deltaTime);
+        }
+    }
+    public void DistanceTracing()//怪物距离检测
+    {
+        if (Vector2.Distance(player.transform.position, transform.position) >= 15)
+        {
+            GameObject.Find("GameController").GetComponent<GameController>().listTemp.Remove(transform);
+            Destroy(gameObject);
         }
     }
     public IEnumerator IsMoveUpdate()//更新怪物是否移动

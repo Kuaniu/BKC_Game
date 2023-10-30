@@ -16,51 +16,65 @@ public class BoomerangController : MonoBehaviour
     public float MoveSpeed;
     //是否返回
     public bool isReturn;
+    //是否第一次接触角色
+    public bool leave;
     //角色
-    public Transform player;
+    private Transform player;
     private void Start()
     {
         BoomerangRb = GetComponent<Rigidbody2D>();
-        isReturn = true;
-        StartCoroutine("SetReturn");
-        InvokeRepeating("DestroyGameobj", 3, 1);
+        isReturn = false;
+        player = GameObject.Find("Player").GetComponent<Transform>();
+        leave = false;
 
-        player=GameObject.Find("Player").GetComponent<Transform>();
-
+        InvokeRepeating("TimeDestroyGameobj", 5, 1);
     }
     private void FixedUpdate()
     {
         //武器自转
         transform.Rotate(Vector3.forward, rotation);
-        var obj = GameObject.Find("GameController").GetComponent<GameController>().FindClosestMonster();
-
-        if (obj != Vector3.zero)
+        var obj = GameObject.Find("GameController").GetComponent<GameController>();
+        if(obj==null)
         {
-            Vector2 pos = (obj - transform.position).normalized;
+            return;
+        }
+        if (obj.FindClosestMonster() != Vector3.zero)
+        {
+            Vector2 pos = (obj.FindClosestMonster() - transform.position).normalized;
             if (!isReturn)
             {
-                BoomerangRb.velocity += pos * MoveSpeed * Time.deltaTime;
+                BoomerangRb.velocity += pos * MoveSpeed;
             }
             else
             {
                 pos = (player.position - transform.position).normalized;
-                BoomerangRb.velocity += pos * MoveSpeed * Time.deltaTime;
+                BoomerangRb.velocity = pos * MoveSpeed*10;
             }
         }
 
 
     }
-    private void DestroyGameobj()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        Destroy(gameObject); 
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            leave = true;
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Monster")&& leave)
+        {
+            isReturn = true;
+        }
+        if (collision.gameObject.CompareTag("Player") && leave)
+        {
+            Destroy(gameObject);
+        }
     }
 
-    private IEnumerator SetReturn()
-    {
-        while (true)
-        {
-            isReturn = !isReturn;
-            yield return new WaitForSeconds(2f);
-        }
+    private void TimeDestroyGameobj()    //时间过长删除自身
+    {        
+            Destroy(gameObject);
     }
 }

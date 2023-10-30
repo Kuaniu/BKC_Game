@@ -14,7 +14,7 @@ public class MonsterController : MonoBehaviour
     //获取怪物Renderer
     SpriteRenderer monsterRenderer;
     //更新怪物是否可以移动
-    private bool isMove=true;
+    private bool isMove = true;
 
     //基本参数
     [Header("移动速度")]
@@ -25,6 +25,8 @@ public class MonsterController : MonoBehaviour
     public GameObject xpPrefab;
     [Header("攻击力")]
     public float Damage;
+    [Header("是否时而停止")]
+    public bool isStop;
 
     void Start()
     {
@@ -38,7 +40,10 @@ public class MonsterController : MonoBehaviour
         monsterRenderer = GetComponent<SpriteRenderer>();
 
         //持续切换怪物是否可以移动
-        StartCoroutine("IsMoveUpdate");
+        if (isStop)
+        {
+            StartCoroutine("IsMoveUpdate");
+        }
     }
     private void FixedUpdate()//物理运动
     {
@@ -64,26 +69,36 @@ public class MonsterController : MonoBehaviour
         //碰到角色检测
         if (collision.gameObject.CompareTag("Player"))
         {
-            print("角色与怪物发生碰撞");
             contact = true;
         }
+
         //碰到武器Boomerang检测
-        if (collision.gameObject.CompareTag("Bull"))
+        if (collision.gameObject.CompareTag("Boomerang"))
         {
             MonsterHP -= collision.GetComponent<BoomerangController>().BoomerangDamage;
             StartCoroutine(monsterShake());
-            //怪物血量小于等于0则删除
-            if (MonsterHP <= 0)
-            {
-                //出列
-                GameObject.Find("GameController").GetComponent<GameController>().listTemp.Remove(transform);
-                Destroy(gameObject);
-                //获取游戏时间，时间越久最高经验球掉落概率越大
-                //掉落经验xpPrefab
-                Instantiate(xpPrefab, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
-            }
+            DestroyManage();
         }
 
+        //碰到武器Dart检测
+        if (collision.gameObject.CompareTag("Dart"))
+        {
+            MonsterHP -= collision.GetComponent<DartController>().DartDamage;
+            StartCoroutine(monsterShake());
+            DestroyManage();
+        }
+    }
+    public void DestroyManage()//怪物血量小于等于0则删除
+    {
+        if (MonsterHP <= 0)
+        {
+            //出列
+            GameObject.Find("GameController").GetComponent<GameController>().listTemp.Remove(transform);
+            Destroy(gameObject);
+            //获取游戏时间，时间越久最高经验球掉落概率越大
+            //掉落经验xpPrefab
+            Instantiate(xpPrefab, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -96,9 +111,9 @@ public class MonsterController : MonoBehaviour
 
     public void VectorTracing()//怪物向量追踪
     {
-        if (!contact&&isMove)
+        if (!contact && isMove)
         {
-            transform.position = Vector3.MoveTowards(transform.position,player.position, monsterMoveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, player.position, monsterMoveSpeed * Time.deltaTime);
         }
     }
     public void DistanceTracing()//怪物距离检测
@@ -111,9 +126,9 @@ public class MonsterController : MonoBehaviour
     }
     public IEnumerator IsMoveUpdate()//更新怪物是否移动
     {
-        while(true)
+        while (true)
         {
-            if(isMove)
+            if (isMove)
             {
                 yield return new WaitForSeconds(5f);
             }

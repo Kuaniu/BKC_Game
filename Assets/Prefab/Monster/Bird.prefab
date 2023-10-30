@@ -102,10 +102,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f326b6d5c4ad8024bb954d3bb491c0eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterMoveSpeed: 1
+  monsterMoveSpeed: 2.5
   MonsterHP: 5
   xpPrefab: {fileID: 8296485533287518207, guid: 19a5f7ee1d6693e4f9f01ba57118e050, type: 3}
   Damage: 1
+  isStop: 1
 --- !u!58 &-8036825575117637279
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -138,9 +139,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.25}
+  m_Offset: {x: 0, y: -0.14801875}
   serializedVersion: 2
-  m_Radius: 5.07
+  m_Radius: 5
 --- !u!50 &5410803054402077770
 Rigidbody2D:
   serializedVersion: 4
@@ -266,7 +267,7 @@ Transform:
   m_GameObject: {fileID: 8576601157168083319}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.31624544, y: 0.34, z: 0}
+  m_LocalPosition: {x: 0.31624544, y: -0.17173894, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

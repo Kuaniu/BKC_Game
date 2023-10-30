@@ -441,7 +441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerMoveSpeed: 3
   PlayerHP: {fileID: 163662394}
-  HPcount: 99999
+  HPcount: 99
 --- !u!212 &262938621
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -720,7 +720,7 @@ MonoBehaviour:
   Hedgehog: {fileID: 7688450233684304388, guid: cdf5c78d53107c34988d5db270849f9e, type: 3}
   Player: {fileID: 262938619}
   Boomerang: {fileID: 6132997416541237090, guid: 3caa47708f696744a8b65f5a367f97bc, type: 3}
-  haveBoomerang: 1
+  Dart: {fileID: 5818343508178420141, guid: 30d605b226cff02439056ada1fcfea2a, type: 3}
   spawn:
   - {fileID: 1571346194}
   - {fileID: 1845051206}
@@ -1400,7 +1400,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: a2c00fda2aa765a43820f7336a394144, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

@@ -16,7 +16,6 @@ public class Experience : MonoBehaviour
 
     private void DestroyGameObject()//É¾³ý×ÔÉí
     {
-        print("É¾³ý");
         Destroy(gameObject);
     }
 }

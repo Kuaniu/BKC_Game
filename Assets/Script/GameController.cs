@@ -13,8 +13,11 @@ public class GameController : MonoBehaviour
     public GameObject Player;//角色
 
     [Header("武器预制体")]
-    public GameObject Boomerang;
-    public bool haveBoomerang;
+    public GameObject Boomerang;//回旋镖
+    private bool haveBoomerang;
+
+    public GameObject Dart;//飞刀
+    private bool haveDart;
 
     [Header("怪物生成点")]
     public GameObject[] spawn;
@@ -22,8 +25,6 @@ public class GameController : MonoBehaviour
 
     [Header("所有怪物")]
     public List<Transform> listTemp;
-
-
 
     void Start()
     {
@@ -34,34 +35,48 @@ public class GameController : MonoBehaviour
         InvokeRepeating("FourStages", 120, 1);
         listTemp = new List<Transform>();
         flag = 0;
+        haveBoomerang = true;
+        haveDart= false;
 
         WeaponGeneration();
-
     }
     void Update()
     {
         TextStages();
         FindClosestMonster();
-
+        InstantiateBoomerang();
     }
-
+    public void SetHaveBoomerang(bool isHave)
+    {
+        haveBoomerang=isHave;
+    }
+    public void SetHaveDart(bool isHave)
+    {
+        haveDart= isHave;
+    }
     private void WeaponGeneration()
     {
         if (haveBoomerang)
         {
-            InvokeRepeating("InstantiateBoomerang", 0, 4f);
+            //InvokeRepeating("InstantiateBoomerang", 0, 4f);
         }
-
+        if(haveDart)
+        {
+            InvokeRepeating("InstantiateDart", 0, 1f);
+        }
     }
-    private void InstantiateBoomerang()
+    private void InstantiateBoomerang()//回旋镖生成
     {
         Instantiate(Boomerang, Player.transform.position, Quaternion.identity, gameObject.transform);
+    }
+    private void InstantiateDart()//飞镖生成
+    {
+        Instantiate(Dart, Player.transform.position, Quaternion.identity, gameObject.transform);
     }
     public void MonsterListAdd(Transform Monster)//将Monster加入列表里
     {
         listTemp.Add(Monster);
     }
-
     private void OneStages()
     {
         flag = Random.Range(0, 12);
@@ -114,7 +129,6 @@ public class GameController : MonoBehaviour
             FourStages();
         }
     }
-
     public Vector3 FindClosestMonster()
     {
         Transform closestMonster = null;
@@ -139,6 +153,8 @@ public class GameController : MonoBehaviour
         }
         return Vector3.zero;
     }
+
+
 
     //private IEnumerator FourStages()
     //{

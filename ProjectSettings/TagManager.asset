@@ -5,8 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Monster
-  - Bull
   - Experience
+  - Boomerang
+  - Dart
   layers:
   - Default
   - TransparentFX

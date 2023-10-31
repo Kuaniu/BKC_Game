@@ -20,6 +20,8 @@ public class BoomerangController : MonoBehaviour
     public bool leave;
     //角色
     private Transform player;
+
+    private Vector3 Thepos;
     private void Start()
     {
         BoomerangRb = GetComponent<Rigidbody2D>();
@@ -28,19 +30,22 @@ public class BoomerangController : MonoBehaviour
         leave = false;
 
         InvokeRepeating("TimeDestroyGameobj", 5, 1);
+
+        var obj = GameObject.Find("GameController").GetComponent<GameController>();
+        if (obj == null)
+        {
+            return;
+        }
+        Thepos = obj.FindClosestMonster();
     }
     private void FixedUpdate()
     {
         //武器自转
         transform.Rotate(Vector3.forward, rotation);
-        var obj = GameObject.Find("GameController").GetComponent<GameController>();
-        if(obj==null)
+
+        if (Thepos != Vector3.zero)
         {
-            return;
-        }
-        if (obj.FindClosestMonster() != Vector3.zero)
-        {
-            Vector2 pos = (obj.FindClosestMonster() - transform.position).normalized;
+            Vector2 pos = (Thepos - transform.position).normalized;
             if (!isReturn)
             {
                 BoomerangRb.velocity += pos * MoveSpeed;
@@ -51,8 +56,6 @@ public class BoomerangController : MonoBehaviour
                 BoomerangRb.velocity = pos * MoveSpeed*10;
             }
         }
-
-
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -72,7 +75,6 @@ public class BoomerangController : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     private void TimeDestroyGameobj()    //时间过长删除自身
     {        
             Destroy(gameObject);

@@ -99,8 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4207e1483e9c2c468538af75d8d9d6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BoomerangDamage: 0.1
-  rotation: 20
+  BoomerangDamage: 2.5
+  rotation: 10
   MoveSpeed: 1
   isReturn: 0
   leave: 0

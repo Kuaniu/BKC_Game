@@ -16,10 +16,14 @@ public class PlayerController : MonoBehaviour
     public Slider PlayerHP;
     public float HPcount;
 
+    //获取怪物Player
+    private SpriteRenderer PlayerRenderer;
     //[Header("攻击力")]
     //public float Damage;
     //经验值
     private float Experience;
+    //动画组件
+    private Animator animator;
     //角色等级
     private double CharacterLevel;
 
@@ -28,6 +32,8 @@ public class PlayerController : MonoBehaviour
         PlayerHP.value = 1;
         Experience = 0;
         CharacterLevel = 0;
+        PlayerRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
     //物理运动更新
     private void FixedUpdate()
@@ -38,6 +44,17 @@ public class PlayerController : MonoBehaviour
     {
         playerHp();
         UpdateCharacterLevel();
+
+        float H = Input.GetAxisRaw("Horizontal");
+        //修改角色面朝方向
+        if (H==-1)
+        {
+            animator.SetBool("isFlip", false);
+        }
+        if (H==1)
+        {
+            animator.SetBool("isFlip", true);
+        }
     }
 
 
@@ -69,7 +86,7 @@ public class PlayerController : MonoBehaviour
     {
         float H = Input.GetAxis("Horizontal");
         float V = Input.GetAxis("Vertical");
-        transform.Translate(new Vector2(H, V) * PlayerMoveSpeed * Time.deltaTime);
+        transform.Translate(new Vector2(H, V).normalized  * PlayerMoveSpeed * Time.deltaTime);
     }
     void playerHp()//角色生命值
 

@@ -33,13 +33,15 @@ public class SkillController : MonoBehaviour
         _skill_first = _skill_canvas.transform.GetChild(0);
         _skill_second = _skill_canvas.transform.GetChild(1);
         _skill_third = _skill_canvas.transform.GetChild(2);
+
+        SetSkillUI(false);
     }
 
     private void SkillBtnEvent()
     {
         Button _skillBtn1 = _skill_first.Find("SkillBtn1").GetComponent<Button>();
-        Button _skillBtn2 = _skill_first.Find("SkillBtn2").GetComponent<Button>();
-        Button _skillBtn3 = _skill_first.Find("SkillBtn3").GetComponent<Button>();
+        Button _skillBtn2 = _skill_second.Find("SkillBtn2").GetComponent<Button>();
+        Button _skillBtn3 = _skill_third.Find("SkillBtn3").GetComponent<Button>();
 
         _skillBtn1.onClick.AddListener(OnSkillBtn1Click);
         _skillBtn2.onClick.AddListener(OnSkillBtn2Click);

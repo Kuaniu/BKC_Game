@@ -25,11 +25,11 @@ public class SkillController : MonoBehaviour
 
     private void GetSkillComponent()
     {
-        SkillCanvas = GameObject.Find(SkillConstant.Path_Skill_Canvas);
-        SkillFirst = GameObject.Find(SkillConstant.Path_Skill_First);
-        SkillSecond = GameObject.Find(SkillConstant.Path_Skill_Second);
-        SkillThird = GameObject.Find(SkillConstant.Path_Skill_Third);
-        SelectedSkills = GameObject.Find(SkillConstant.Path_Skill_Canvas + "/SelectedSkills");
+        SkillCanvas = GameObject.Find(CanvasConstant.Path_Skill_Canvas);
+        SkillFirst = GameObject.Find(CanvasConstant.Path_Skill_First);
+        SkillSecond = GameObject.Find(CanvasConstant.Path_Skill_Second);
+        SkillThird = GameObject.Find(CanvasConstant.Path_Skill_Third);
+        SelectedSkills = GameObject.Find(CanvasConstant.Path_Skill_Canvas + "/SelectedSkills");
 
         SetSkillUI(false);
     }

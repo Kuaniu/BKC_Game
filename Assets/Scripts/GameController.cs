@@ -151,6 +151,14 @@ public class GameController : MonoBehaviour
         {
             FourStages();
         }
+        if (Input.GetKeyUp(KeyCode.Alpha5))
+        {
+            SkillController.Instance.SetSkillUI(true);
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha6))
+        {
+            SkillController.Instance.SetSkillUI(false);
+        }
     }
     //private IEnumerator FourStages()
     //{

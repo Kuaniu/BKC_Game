@@ -30,6 +30,8 @@ public class SkillController : MonoBehaviour
         SkillSecond = GameObject.Find(SkillConstant.Path_Skill_Second);
         SkillThird = GameObject.Find(SkillConstant.Path_Skill_Third);
         SelectedSkills = GameObject.Find(SkillConstant.Path_Skill_Canvas + "/SelectedSkills");
+
+        SetSkillUI(false);
     }
 
     private void SkillBtnEvent()

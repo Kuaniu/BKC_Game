@@ -1270,6 +1270,7 @@ MonoBehaviour:
   Player: {fileID: 262938619}
   Boomerang: {fileID: 6132997416541237090, guid: 3caa47708f696744a8b65f5a367f97bc, type: 3}
   Dart: {fileID: 5818343508178420141, guid: 30d605b226cff02439056ada1fcfea2a, type: 3}
+  FireBall: {fileID: 5624776289628315990, guid: 9bc74c12f4f24404b9ab389a2bb55b19, type: 3}
   spawn:
   - {fileID: 1571346194}
   - {fileID: 1845051206}

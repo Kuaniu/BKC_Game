@@ -84,6 +84,13 @@ public class MonsterController : MonoBehaviour
             StartCoroutine(monsterShake());
             DestroyManage();
         }
+        //碰到武器FireBall检测
+        if (collision.gameObject.CompareTag("FireBall"))
+        {
+            MonsterHP -= collision.GetComponent<FireBallManage>().FireBallDamage;
+            StartCoroutine(monsterShake());
+            DestroyManage();
+        }
     }
     public void DestroyManage()//怪物血量小于等于0则删除
     {

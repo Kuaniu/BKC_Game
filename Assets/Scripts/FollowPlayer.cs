@@ -18,6 +18,6 @@ public class FollowPlayer : MonoBehaviour
     }
     void Follow()
     {
-        transform.position = Vector3.Lerp(transform.position, new Vector3(target.position.x, target.position.y, -5), 5*Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, new Vector3(target.position.x, target.position.y, -5), 10*Time.deltaTime);
     }
 }

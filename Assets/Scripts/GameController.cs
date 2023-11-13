@@ -19,6 +19,9 @@ public class GameController : MonoBehaviour
     public GameObject Dart;//飞刀
     private bool haveDart;
 
+    public GameObject FireBall;
+    private bool haveFireBall;
+
     [Header("怪物生成点")]
     public GameObject[] spawn;
     private int flag;
@@ -38,6 +41,7 @@ public class GameController : MonoBehaviour
 
         haveBoomerang = true;
         haveDart= true;
+        haveFireBall = true;
 
         WeaponGeneration();//角色拥有的武器生成
     }
@@ -53,6 +57,10 @@ public class GameController : MonoBehaviour
     {
         haveDart= isHave;
     }
+    public void SetHaveFireBall(bool isHave)
+    {
+        haveFireBall = isHave;
+    }
     private void WeaponGeneration()
     {
         if (haveBoomerang)
@@ -63,6 +71,10 @@ public class GameController : MonoBehaviour
         {
             InvokeRepeating("InstantiateDart", 0, 1f);
         }
+        if (haveFireBall)
+        {
+            InstantiateFireBall();
+        }
     }
     private void InstantiateBoomerang()//回旋镖生成
     {
@@ -71,6 +83,10 @@ public class GameController : MonoBehaviour
     private void InstantiateDart()//飞镖生成
     {
         Instantiate(Dart, Player.transform.position, Quaternion.identity, gameObject.transform);
+    }
+    private void InstantiateFireBall()//火球生成
+    {
+        Instantiate(FireBall,Player.transform);
     }
     public void MonsterListAdd(Transform Monster)//将Monster加入列表里
     {

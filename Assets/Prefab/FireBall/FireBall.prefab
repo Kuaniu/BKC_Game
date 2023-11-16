@@ -100,7 +100,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FireBallDamage: 10
-  Player: {fileID: 0}
 --- !u!50 &3478569670236132952
 Rigidbody2D:
   serializedVersion: 4

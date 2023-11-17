@@ -1,22 +1,43 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Exit : MonoBehaviour
 {
+    public static Exit Instance;
     private GameObject _exitui;
     private bool _isExit;
 
     void Start()
     {
+        // Singleton
+        Instance = this;
+
+        // GetComponent
         _exitui = GameObject.Find(CanvasConstant.Path_Exit);
         Button _exituibtn = GameObject.Find(CanvasConstant.Path_Exit_Btn).GetComponent<Button>();
-
         _exituibtn.onClick.AddListener(OnClickExitGame);
 
+        Button _continuebtn = GameObject.Find(CanvasConstant.Path_Continue_Btn).GetComponent<Button>();
+        _continuebtn.onClick.AddListener(OnClickContinueGame);
+
+        Button _settingsbtn = GameObject.Find(CanvasConstant.Path_Continue_Btn).GetComponent<Button>();
+        _settingsbtn.onClick.AddListener(OnClickSettings);
+
+
         _exitui.SetActive(false);
+    }
+
+    private void OnClickSettings()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void OnClickContinueGame()
+    {
+        Time.timeScale = 1;
+        _exitui.SetActive(false);
+        _isExit = false;
     }
 
     private void OnClickExitGame()
@@ -30,9 +51,7 @@ public class Exit : MonoBehaviour
         {
             if (_isExit)
             {
-                Time.timeScale = 1;
-                _exitui.SetActive(false);
-                _isExit = false;
+                OnClickContinueGame();
             }
             else
             {

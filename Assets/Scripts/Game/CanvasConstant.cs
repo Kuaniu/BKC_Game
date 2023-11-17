@@ -10,4 +10,6 @@ public class CanvasConstant : MonoBehaviour
     public static string Path_Skill_Third = Path_Skill_Canvas + "/Skill3";
     public static string Path_Exit = "Canvas/Exit";
     public static string Path_Exit_Btn = Path_Exit + "/ExitBtn";
+    public static string Path_Continue_Btn = Path_Exit + "/ContinueBtn";
+    public static string Path_Settings_Btn = Path_Exit + "/SettingsBtn";
 }

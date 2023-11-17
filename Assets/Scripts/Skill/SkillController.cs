@@ -47,16 +47,19 @@ public class SkillController : MonoBehaviour
 
     private void OnSkillBtn3Click()
     {
+        SetSkillUI(false);
         Debug.Log("Skill 3 Onclicked");
     }
 
     private void OnSkillBtn2Click()
     {
+        SetSkillUI(false);
         Debug.Log("Skill 2 Onclicked");
     }
 
     private void OnSkillBtn1Click()
     {
+        SetSkillUI(false);
         Debug.Log("Skill 1 Onclicked");
     }
 
@@ -66,6 +69,11 @@ public class SkillController : MonoBehaviour
     /// <param name="isShow">是否显示UI</param>
     public void SetSkillUI(bool isShow)
     {
+        if (isShow)
+        {
+            Time.timeScale = 0;
+        }
+        else Time.timeScale = 1;
         SkillCanvas.SetActive(isShow);
     }
 

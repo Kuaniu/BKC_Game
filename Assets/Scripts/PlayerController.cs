@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     //动画组件
     private Animator animator;
     //角色等级
-    private double CharacterLevel;
+    private int CharacterLevel;
 
     void Start()
     {
@@ -111,6 +111,16 @@ public class PlayerController : MonoBehaviour
     }
     void UpdateCharacterLevel()//更新角色等级
     {
-        CharacterLevel = Math.Log(Experience, 2);
+        
+        int i = CharacterLevel;print(i);
+        if((int)Math.Log(Experience, 2) > i)
+        {
+            SkillController.Instance.SetSkillUI(true);
+            CharacterLevel = (int)Math.Log(Experience, 2);
+        }
+        //if(CharacterLevel>i)
+        //{
+        //    SkillController.Instance.SetSkillUI(true);
+        //}
     }
 }

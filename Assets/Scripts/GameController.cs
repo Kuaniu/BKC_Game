@@ -29,6 +29,8 @@ public class GameController : MonoBehaviour
     [Header("所有怪物")]
     public List<GameObject> listTemp;
 
+    private List<int> excludedNumbers = new List<int>();//随机数
+
     void Start()
     {
         //从游戏运行的第n秒开始，每隔n秒执行一次函数OneStages函数
@@ -48,6 +50,13 @@ public class GameController : MonoBehaviour
     void Update()
     {
         TextStages();
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            UpFormation(5);
+            DownFormation(5);
+            LeftFormation(5);
+            RightFormation(5);
+        }
     }
     public void SetHaveBoomerang(bool isHave)
     {
@@ -117,6 +126,63 @@ public class GameController : MonoBehaviour
             return closestMonster.gameObject;
         }
         return null;
+    }
+    private void UpFormation(int Count)//上方
+    {
+        for(int i=0;i<Count;i++)
+        {
+            int Rnum = GenerateRandomNumber(-10, 10);
+            var obj = Instantiate(Bird,gameObject.transform);
+            obj.transform.localPosition = new Vector2(Rnum, 6);
+        }
+    }
+    private void DownFormation(int Count)//下方
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            int Rnum = GenerateRandomNumber(-10, 10);
+            var obj = Instantiate(Bird, gameObject.transform);
+            obj.transform.localPosition = new Vector2(Rnum, -6);
+        }
+    }
+    private void LeftFormation(int Count)//左方
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            int Rnum = GenerateRandomNumber(-6, 6);
+            var obj = Instantiate(Bird, gameObject.transform);
+            obj.transform.localPosition = new Vector2(-10, Rnum);
+        }
+    }
+    private void RightFormation(int Count)//右方
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            int Rnum = GenerateRandomNumber(-6, 6);
+            var obj = Instantiate(Bird, gameObject.transform);
+            obj.transform.localPosition = new Vector2(10, Rnum);
+        }
+    }
+    private int GenerateRandomNumber(int minRange,int maxRange)//指定随机数范围
+    {
+        // 如果所有数字都已经被排除，重新开始
+        if (excludedNumbers.Count == (maxRange - minRange))
+        {
+            Debug.LogWarning("All numbers have been excluded. Resetting exclusion list.");
+            excludedNumbers.Clear();
+        }
+
+        // 循环生成随机数，直到生成的数字不在排除列表中
+        int randomInt;
+        do
+        {
+            randomInt = Random.Range(minRange, maxRange);
+        } while (excludedNumbers.Contains(randomInt));
+
+        // 将当前生成的数字添加到排除列表中
+        excludedNumbers.Add(randomInt);
+
+        return randomInt;
     }
     private void OneStages()
     {

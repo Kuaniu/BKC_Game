@@ -27,7 +27,7 @@ public class GameController : MonoBehaviour
     private int flag;
 
     [Header("所有怪物")]
-    public List<Transform> listTemp;
+    public List<GameObject> listTemp;
 
     void Start()
     {
@@ -36,7 +36,7 @@ public class GameController : MonoBehaviour
         InvokeRepeating("TwoStages", 30, 1);
         InvokeRepeating("ThreeStages", 60, 1);
         InvokeRepeating("FourStages", 120, 1);
-        listTemp = new List<Transform>();
+        listTemp = new List<GameObject>();
         flag = 0;
 
         haveBoomerang = true;
@@ -63,11 +63,12 @@ public class GameController : MonoBehaviour
     }
     private void WeaponGeneration()
     {
+
         if (haveBoomerang)
         {
-            InvokeRepeating("InstantiateBoomerang",0, 3f);
+            InvokeRepeating("InstantiateBoomerang", 0, 3f);
         }
-        if(haveDart)
+        if (haveDart)
         {
             InvokeRepeating("InstantiateDart", 0, 1f);
         }
@@ -75,6 +76,7 @@ public class GameController : MonoBehaviour
         {
             InstantiateFireBall();
         }
+
     }
     private void InstantiateBoomerang()//回旋镖生成
     {
@@ -88,33 +90,33 @@ public class GameController : MonoBehaviour
     {
         Instantiate(FireBall,Player.transform);
     }
-    public void MonsterListAdd(Transform Monster)//将Monster加入列表里
+    public void MonsterListAdd(GameObject Monster)//将Monster加入列表里
     {
         listTemp.Add(Monster);
     }
-    public Vector3 FindClosestMonster()//找到距离角色最近的怪物
+    public GameObject FindClosestMonster()//找到距离角色最近的怪物
     {
         Transform closestMonster = null;
         float closestDistanceSqr = Mathf.Infinity;
         Vector3 currentPosition = Player.transform.position;
 
-        foreach (Transform potentialTarget in listTemp)
+        foreach (GameObject potentialTarget in listTemp)
         {
-            Vector3 directionToTarget = potentialTarget.position - currentPosition;
+            Vector3 directionToTarget = potentialTarget.transform.position - currentPosition;
             float dSqrToTarget = directionToTarget.sqrMagnitude;
             if (dSqrToTarget < closestDistanceSqr)
             {
                 closestDistanceSqr = dSqrToTarget;
-                closestMonster = potentialTarget;
+                closestMonster = potentialTarget.transform;
             }
         }
 
         if (closestMonster != null)
         {
             // 在这里可以处理最近的怪物
-            return closestMonster.transform.position;
+            return closestMonster.gameObject;
         }
-        return Vector3.zero;
+        return null;
     }
     private void OneStages()
     {

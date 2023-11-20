@@ -31,7 +31,7 @@ public class MonsterController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
         //把本身加入GameController中的怪物列表里
-        GameObject.Find("GameController").GetComponent<GameController>().MonsterListAdd(transform);
+        GameObject.Find("GameController").GetComponent<GameController>().MonsterListAdd(gameObject);
 
         //获取怪物Renderer
         monsterRenderer = GetComponent<SpriteRenderer>();
@@ -97,7 +97,7 @@ public class MonsterController : MonoBehaviour
         if (MonsterHP <= 0)
         {
             //出列
-            GameObject.Find("GameController").GetComponent<GameController>().listTemp.Remove(transform);
+            GameObject.Find("GameController").GetComponent<GameController>().listTemp.Remove(gameObject);
             Destroy(gameObject);
             //获取游戏时间，时间越久最高经验球掉落概率越大
             //掉落经验xpPrefab
@@ -124,7 +124,7 @@ public class MonsterController : MonoBehaviour
     {
         if (Vector2.Distance(player.transform.position, transform.position) >= 15)
         {
-            GameObject.Find("GameController").GetComponent<GameController>().listTemp.Remove(transform);
+            GameObject.Find("GameController").GetComponent<GameController>().listTemp.Remove(gameObject);
             Destroy(gameObject);
         }
     }

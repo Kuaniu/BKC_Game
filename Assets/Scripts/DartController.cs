@@ -10,18 +10,14 @@ public class DartController : MonoBehaviour
     //移动速度
     public float MoveSpeed;
 
-    private Vector3 pos;
+    private GameObject pos;
     private void Start()
     {
-        var obj = GameObject.Find("GameController");
-        if(obj==null)
-        {
-            return;
-        }
-        pos = obj.GetComponent<GameController>().FindClosestMonster();
-        if(pos==Vector3.zero)
+        pos = GameObject.Find("GameController").GetComponent<GameController>().FindClosestMonster();
+        if(pos==null)
         {
             Destroy(gameObject);
+            return;
         }
 
         InvokeRepeating("TimeDestroyGameobj",0.5f, 1);
@@ -29,9 +25,14 @@ public class DartController : MonoBehaviour
     }
     private void Update()
     {
+        if (pos == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
         //面朝怪物
         // 计算物体应该旋转到面朝目标物体的角度
-        Vector3 targetDirection = pos - gameObject.transform.position;
+        Vector3 targetDirection = pos.transform.position - gameObject.transform.position;
         float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
 
         // 设置物体的rotation，只改变z值
@@ -39,8 +40,12 @@ public class DartController : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (pos == null)
+        {
+            return;
+        }
         //武器移动
-        transform.position = Vector3.MoveTowards(transform.position, pos, MoveSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, pos.transform.position, MoveSpeed * Time.deltaTime);
 
     }
     private void TimeDestroyGameobj()    //时间过长删除自身

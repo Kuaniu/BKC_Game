@@ -34,8 +34,8 @@ public class GameController : MonoBehaviour
     void Start()
     {
         //从游戏运行的第n秒开始，每隔n秒执行一次函数OneStages函数
-        InvokeRepeating("OneStages", 0, 1);
-        InvokeRepeating("TwoStages", 30, 1);
+        //InvokeRepeating("OneStages", 0, 1);
+        InvokeRepeating("TwoStages", 0, 1);
         InvokeRepeating("ThreeStages", 60, 1);
         InvokeRepeating("FourStages", 120, 1);
         listTemp = new List<GameObject>();
@@ -50,13 +50,6 @@ public class GameController : MonoBehaviour
     void Update()
     {
         TextStages();
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            UpFormation(5);
-            DownFormation(5);
-            LeftFormation(5);
-            RightFormation(5);
-        }
     }
     public void SetHaveBoomerang(bool isHave)
     {
@@ -127,7 +120,7 @@ public class GameController : MonoBehaviour
         }
         return null;
     }
-    private void UpFormation(int Count)//上方
+    private void UpFormation(int Count)
     {
         for(int i=0;i<Count;i++)
         {
@@ -136,7 +129,7 @@ public class GameController : MonoBehaviour
             obj.transform.localPosition = new Vector2(Rnum, 6);
         }
     }
-    private void DownFormation(int Count)//下方
+    private void DownFormation(int Count)
     {
         for (int i = 0; i < Count; i++)
         {
@@ -145,7 +138,7 @@ public class GameController : MonoBehaviour
             obj.transform.localPosition = new Vector2(Rnum, -6);
         }
     }
-    private void LeftFormation(int Count)//左方
+    private void LeftFormation(int Count)
     {
         for (int i = 0; i < Count; i++)
         {
@@ -154,7 +147,7 @@ public class GameController : MonoBehaviour
             obj.transform.localPosition = new Vector2(-10, Rnum);
         }
     }
-    private void RightFormation(int Count)//右方
+    private void RightFormation(int Count)
     {
         for (int i = 0; i < Count; i++)
         {
@@ -186,8 +179,10 @@ public class GameController : MonoBehaviour
     }
     private void OneStages()
     {
-        flag = Random.Range(0, 12);
-        Instantiate(Bird, spawn[flag].transform.position, Quaternion.identity, gameObject.transform);
+        UpFormation(1);
+        DownFormation(1);
+        LeftFormation(1);
+        RightFormation(1);
     }
     private void TwoStages()
     {

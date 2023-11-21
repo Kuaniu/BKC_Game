@@ -111,8 +111,8 @@ public class PlayerController : MonoBehaviour
     }
     void UpdateCharacterLevel()//更新角色等级
     {
-        
-        int i = CharacterLevel;print(i);
+
+        int i = CharacterLevel;
         if((int)Math.Log(Experience, 2) > i)
         {
             SkillController.Instance.SetSkillUI(true);

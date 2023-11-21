@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 //using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
@@ -22,28 +23,24 @@ public class GameController : MonoBehaviour
     public GameObject FireBall;
     private bool haveFireBall;
 
-    [Header("怪物生成点")]
-    public GameObject[] spawn;
-    private int flag;
-
-    [Header("所有怪物")]
-    public List<GameObject> listTemp;
-
     private List<int> excludedNumbers = new List<int>();//随机数
+    private MonsterPools monsterPool;
 
     void Start()
     {
-        //从游戏运行的第n秒开始，每隔n秒执行一次函数OneStages函数
-        //InvokeRepeating("OneStages", 0, 1);
-        InvokeRepeating("TwoStages", 0, 1);
-        InvokeRepeating("ThreeStages", 60, 1);
-        InvokeRepeating("FourStages", 120, 1);
-        listTemp = new List<GameObject>();
-        flag = 0;
+        //绑定、初始化
+        monsterPool = GetComponent<MonsterPools>();
 
         haveBoomerang = true;
-        haveDart= true;
+        haveDart = true;
         haveFireBall = true;
+
+        //从游戏运行的第n秒开始，每隔n秒执行一次函数OneStages函数
+        InvokeRepeating("OneStages", 0, 1);
+        InvokeRepeating("TwoStages", 30, 1);
+        InvokeRepeating("ThreeStages", 60, 1);
+        InvokeRepeating("FourStages", 120, 1);
+
 
         WeaponGeneration();//角色拥有的武器生成
     }
@@ -92,68 +89,36 @@ public class GameController : MonoBehaviour
     {
         Instantiate(FireBall,Player.transform);
     }
-    public void MonsterListAdd(GameObject Monster)//将Monster加入列表里
-    {
-        listTemp.Add(Monster);
-    }
-    public GameObject FindClosestMonster()//找到距离角色最近的怪物
-    {
-        Transform closestMonster = null;
-        float closestDistanceSqr = Mathf.Infinity;
-        Vector3 currentPosition = Player.transform.position;
-
-        foreach (GameObject potentialTarget in listTemp)
-        {
-            Vector3 directionToTarget = potentialTarget.transform.position - currentPosition;
-            float dSqrToTarget = directionToTarget.sqrMagnitude;
-            if (dSqrToTarget < closestDistanceSqr)
-            {
-                closestDistanceSqr = dSqrToTarget;
-                closestMonster = potentialTarget.transform;
-            }
-        }
-
-        if (closestMonster != null)
-        {
-            // 在这里可以处理最近的怪物
-            return closestMonster.gameObject;
-        }
-        return null;
-    }
-    private void UpFormation(int Count)
+    private void UpFormation(string monsterName ,int Count)
     {
         for(int i=0;i<Count;i++)
         {
             int Rnum = GenerateRandomNumber(-10, 10);
-            var obj = Instantiate(Bird,gameObject.transform);
-            obj.transform.localPosition = new Vector2(Rnum, 6);
+            SpawnMonster(monsterName, new Vector3(Rnum, 6,0)+Player.transform.position);
         }
     }
-    private void DownFormation(int Count)
+    private void DownFormation(string monsterName, int Count)
     {
         for (int i = 0; i < Count; i++)
         {
             int Rnum = GenerateRandomNumber(-10, 10);
-            var obj = Instantiate(Bird, gameObject.transform);
-            obj.transform.localPosition = new Vector2(Rnum, -6);
+            SpawnMonster(monsterName, new Vector3(Rnum, -6, 0) + Player.transform.position);
         }
     }
-    private void LeftFormation(int Count)
+    private void LeftFormation(string monsterName, int Count)
     {
         for (int i = 0; i < Count; i++)
         {
-            int Rnum = GenerateRandomNumber(-6, 6);
-            var obj = Instantiate(Bird, gameObject.transform);
-            obj.transform.localPosition = new Vector2(-10, Rnum);
+            int Rnum = GenerateRandomNumber(-10, 10);
+            SpawnMonster(monsterName, new Vector3(-10, Rnum,0) + Player.transform.position);
         }
     }
-    private void RightFormation(int Count)
+    private void RightFormation(string monsterName, int Count)
     {
         for (int i = 0; i < Count; i++)
         {
-            int Rnum = GenerateRandomNumber(-6, 6);
-            var obj = Instantiate(Bird, gameObject.transform);
-            obj.transform.localPosition = new Vector2(10, Rnum);
+            int Rnum = GenerateRandomNumber(-10, 10);
+            SpawnMonster(monsterName, new Vector3(10, Rnum, 0) + Player.transform.position);
         }
     }
     private int GenerateRandomNumber(int minRange,int maxRange)//指定随机数范围
@@ -161,7 +126,6 @@ public class GameController : MonoBehaviour
         // 如果所有数字都已经被排除，重新开始
         if (excludedNumbers.Count == (maxRange - minRange))
         {
-            Debug.LogWarning("All numbers have been excluded. Resetting exclusion list.");
             excludedNumbers.Clear();
         }
 
@@ -179,38 +143,58 @@ public class GameController : MonoBehaviour
     }
     private void OneStages()
     {
-        UpFormation(1);
-        DownFormation(1);
-        LeftFormation(1);
-        RightFormation(1);
+        UpFormation("Bird", 1);
+        DownFormation("Bird", 1);
+        LeftFormation("Bird", 1);
+        RightFormation("Bird", 1);
     }
     private void TwoStages()
     {
-        CancelInvoke("OneStages");
-        flag = Random.Range(0, 12);
-        Instantiate(Bird, spawn[flag].transform.position, Quaternion.identity, gameObject.transform);
-        flag = Random.Range(0, 12);
-        Instantiate(Scarecrow, spawn[flag].transform.position, Quaternion.identity, gameObject.transform);
+        UpFormation("Bird", 1);
+        DownFormation("Bird", 1);
+        LeftFormation("Bird", 1);
+        RightFormation("Bird", 1);
+
+        UpFormation("Sca", 1);
+        DownFormation("Sca", 1);
+        LeftFormation("Sca", 1);
+        RightFormation("Sca", 1);
+
     }
     private void ThreeStages()
     {
-        CancelInvoke("TwoStages");
-        flag = Random.Range(0, 12);
-        Instantiate(Bird, spawn[flag].transform.position, Quaternion.identity, gameObject.transform);
-        flag = Random.Range(0, 12);
-        Instantiate(Scarecrow, spawn[flag].transform.position, Quaternion.identity, gameObject.transform);
-        flag = Random.Range(0, 12);
-        Instantiate(Hedgehog, spawn[flag].transform.position, Quaternion.identity, gameObject.transform);
+        UpFormation("Bird", 1);
+        DownFormation("Bird", 1);
+        LeftFormation("Bird", 1);
+        RightFormation("Bird", 1);
+
+        UpFormation("Sca", 1);
+        DownFormation("Sca", 1);
+        LeftFormation("Sca", 1);
+        RightFormation("Sca", 1);
+
+        UpFormation("Hed", 1);
+        DownFormation("Hed", 1);
+        LeftFormation("Hed", 1);
+        RightFormation("Hed", 1);
 
     }
     private void FourStages()
     {
-        CancelInvoke("ThreeStages");
-        for (int i = 0; i < 12; i++)
-        {
-            Instantiate(Bird, spawn[i].transform.position, Quaternion.identity, gameObject.transform);
-        }
+        UpFormation("Bird", 1);
+        DownFormation("Bird", 1);
+        LeftFormation("Bird", 1);
+        RightFormation("Bird", 1); ;
 
+        UpFormation("Sca", 1);
+        DownFormation("Sca", 1);
+        LeftFormation("Sca", 1);
+        RightFormation("Sca", 1);
+
+        UpFormation("Hed", 1);
+        DownFormation("Hed", 1);
+        LeftFormation("Hed", 1);
+        RightFormation("Hed", 1);
     }
     private void TextStages()
     {
@@ -239,6 +223,16 @@ public class GameController : MonoBehaviour
             SkillController.Instance.SetSkillUI(false);
         }
     }
+    private void SpawnMonster(string monsterName,Vector3 monsterPos)//对象池
+    {
+        GameObject monsterObj = monsterPool.GetObjectFromPool(monsterName);
+        monsterObj.transform.position = monsterPos;
+    }
+    private void ReturnBird(string monsterName, GameObject monsterObj)//回收
+    {
+        monsterPool.ReturnObjectToPool(monsterName, monsterObj);
+    }
+
     //private IEnumerator FourStages()
     //{
     //    while (true)

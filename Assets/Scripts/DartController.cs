@@ -9,41 +9,27 @@ public class DartController : MonoBehaviour
     public float DartDamage;
     //移动速度
     public float MoveSpeed;
-
+    private Transform player;
     private GameObject pos;
     private void Start()
     {
-        pos = GameObject.Find("GameController").GetComponent<GameController>().FindClosestMonster();
-        if(pos==null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
+        player = GameObject.Find("Player").transform;
+        pos = GameObject.Find("GameController").GetComponent<MonsterPools>().GetClosestMonster(player.position);
         InvokeRepeating("TimeDestroyGameobj",0.5f, 1);
 
     }
     private void Update()
     {
-        if (pos == null)
-        {
-            Destroy(gameObject);
-            return;
-        }
         //面朝怪物
-        // 计算物体应该旋转到面朝目标物体的角度
+        //计算物体应该旋转到面朝目标物体的角度
         Vector3 targetDirection = pos.transform.position - gameObject.transform.position;
         float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
 
-        // 设置物体的rotation，只改变z值
-        transform.rotation = Quaternion.Euler(0, 0, angle-90f);
+        //设置物体的rotation，只改变z值
+        transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
     }
     private void FixedUpdate()
     {
-        if (pos == null)
-        {
-            return;
-        }
         //武器移动
         transform.position = Vector3.MoveTowards(transform.position, pos.transform.position, MoveSpeed * Time.deltaTime);
 

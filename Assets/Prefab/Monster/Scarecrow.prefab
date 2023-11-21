@@ -467,6 +467,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterMoveSpeed: 1
   MonsterHP: 10
+  monsterName: Sca
   xpPrefab: {fileID: 1913990314124067131, guid: 4007eb89e5c0e4c448f959f5aeb59b85, type: 3}
   Damage: 1
   isStop: 0

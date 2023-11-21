@@ -30,20 +30,10 @@ public class BoomerangController : MonoBehaviour
         leave = false;
 
         InvokeRepeating("TimeDestroyGameobj", 5, 1);
-        Thepos = GameObject.Find("GameController").GetComponent<GameController>().FindClosestMonster();
-        if(Thepos==null)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        Thepos = GameObject.Find("GameController").GetComponent<MonsterPools>().GetFarthestMonster(player.position);
     }
     private void FixedUpdate()
     {
-        if (Thepos == null)
-        {
-            Destroy(gameObject);
-            return;
-        }
         //武器自转
         transform.Rotate(Vector3.forward, rotation);
 
@@ -57,7 +47,7 @@ public class BoomerangController : MonoBehaviour
             else
             {
                 pos = (player.position - transform.position).normalized;
-                BoomerangRb.velocity = pos * MoveSpeed*10;
+                BoomerangRb.velocity = pos * MoveSpeed * 10;
             }
         }
     }
@@ -77,10 +67,6 @@ public class BoomerangController : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && leave)
         {
             Destroy(gameObject);
-        }
-        if(Thepos==null)
-        {
-            isReturn = true;
         }
     }
     private void TimeDestroyGameobj()    //时间过长删除自身

@@ -873,8 +873,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterMoveSpeed: 0.5
   MonsterHP: 20
+  monsterName: Hed
   xpPrefab: {fileID: 3896130822480917696, guid: 880a1c1eea531c5439e8b2a5d9f0b095, type: 3}
   Damage: 4
+  isStop: 0
 --- !u!50 &1379788742020733677
 Rigidbody2D:
   serializedVersion: 4

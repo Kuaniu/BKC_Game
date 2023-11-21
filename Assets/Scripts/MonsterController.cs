@@ -14,26 +14,20 @@ public class MonsterController : MonoBehaviour
     private bool isMove = true;
 
     //基本参数
-    [Header("移动速度")]
     public float monsterMoveSpeed;
-    [Header("怪物生命值")]
     public float MonsterHP;
-    [Header("Experience")]
+    public string monsterName;
     public GameObject xpPrefab;
-    [Header("攻击力")]
     public float Damage;
-    [Header("是否时而停止")]
     public bool isStop;
 
+    private MonsterPools monsterPool;//怪物对象池
+
+    private Coroutine monsterShakeCor;
     void Start()
     {
-        //获取角色的transform
+        monsterPool = GameObject.Find("GameController").GetComponent<MonsterPools>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
-
-        //把本身加入GameController中的怪物列表里
-        GameObject.Find("GameController").GetComponent<GameController>().MonsterListAdd(gameObject);
-
-        //获取怪物Renderer
         monsterRenderer = GetComponent<SpriteRenderer>();
 
         //持续切换怪物是否可以移动
@@ -73,32 +67,28 @@ public class MonsterController : MonoBehaviour
         if (collision.gameObject.CompareTag("Boomerang"))
         {
             MonsterHP -= collision.GetComponent<BoomerangController>().BoomerangDamage;
-            StartCoroutine(monsterShake());
-            DestroyManage();
         }
 
         //碰到武器Dart检测
         if (collision.gameObject.CompareTag("Dart"))
         {
             MonsterHP -= collision.GetComponent<DartController>().DartDamage;
-            StartCoroutine(monsterShake());
-            DestroyManage();
         }
         //碰到武器FireBall检测
         if (collision.gameObject.CompareTag("FireBall"))
         {
             MonsterHP -= collision.GetComponent<FireBallManage>().FireBallDamage;
-            StartCoroutine(monsterShake());
-            DestroyManage();
         }
+        monsterShakeCor= StartCoroutine(monsterShake());
+        DestroyManage();
+
     }
     public void DestroyManage()//怪物血量小于等于0则删除
     {
+        StopCoroutine(monsterShakeCor);
         if (MonsterHP <= 0)
         {
-            //出列
-            GameObject.Find("GameController").GetComponent<GameController>().listTemp.Remove(gameObject);
-            Destroy(gameObject);
+            ReturnBird(monsterName);
             //获取游戏时间，时间越久最高经验球掉落概率越大
             //掉落经验xpPrefab
             Instantiate(xpPrefab, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
@@ -124,8 +114,7 @@ public class MonsterController : MonoBehaviour
     {
         if (Vector2.Distance(player.transform.position, transform.position) >= 15)
         {
-            GameObject.Find("GameController").GetComponent<GameController>().listTemp.Remove(gameObject);
-            Destroy(gameObject);
+            ReturnBird(monsterName);
         }
     }
     public IEnumerator IsMoveUpdate()//更新怪物是否移动
@@ -171,5 +160,9 @@ public class MonsterController : MonoBehaviour
 
         // 确保Sprite可见
         monsterRenderer.enabled = true;
+    }
+    private void ReturnBird(string monsterName)//回收
+    {
+        monsterPool.ReturnObjectToPool(monsterName, gameObject);
     }
 }

@@ -5,17 +5,13 @@ using UnityEngine;
 
 public class Experience : MonoBehaviour
 {
-    [Header("经验值")]
     public float xp=0;
-    private void Start()
-    {
-        //60秒后未被拾取则删除自身
-        Invoke("DestroyGameObject", 60);
+    public string ExpName;
+    private ExpBallPool expballPool;//经验球对象池
 
-    }
 
-    private void DestroyGameObject()//删除自身
+    private void ReturnExpBallPool(string ExpName)//回收
     {
-        Destroy(gameObject);
+        expballPool.ReturnObjectToPool(ExpName, gameObject);
     }
 }

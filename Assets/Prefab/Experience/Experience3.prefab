@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   xp: 1
+  ExpName: Exp3
 --- !u!58 &5493407027538965570
 CircleCollider2D:
   m_ObjectHideFlags: 0

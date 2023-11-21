@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterPools : MonoBehaviour
+public class ExpBallPool : MonoBehaviour
 {
     [System.Serializable]
     public class Pool
@@ -25,16 +25,16 @@ public class MonsterPools : MonoBehaviour
 
         foreach (Pool pool in pools)
         {
-            List<GameObject> monsterPool = new List<GameObject>();
+            List<GameObject> expBallPool = new List<GameObject>();
 
             for (int i = 0; i < pool.size; i++)
             {
                 GameObject obj = Instantiate(pool.prefab);
                 obj.SetActive(false);
-                monsterPool.Add(obj);
+                expBallPool.Add(obj);
             }
 
-            poolDictionary.Add(pool.tag, monsterPool);
+            poolDictionary.Add(pool.tag, expBallPool);
         }
     }
 
@@ -82,54 +82,5 @@ public class MonsterPools : MonoBehaviour
             }
         }
         return null;
-    }
-
-    public GameObject GetClosestMonster(Vector3 playerPosition)
-    {
-        GameObject closestMonster = null;
-        float closestDistance = float.MaxValue;
-
-        foreach (Pool pool in pools)
-        {
-            foreach (GameObject monster in poolDictionary[pool.tag])
-            {
-                if (monster.activeInHierarchy)
-                {
-                    float distance = Vector3.Distance(playerPosition, monster.transform.position);
-
-                    if (distance < closestDistance)
-                    {
-                        closestDistance = distance;
-                        closestMonster = monster;
-                    }
-                }
-            }
-        }
-
-        return closestMonster;
-    }
-    public GameObject GetFarthestMonster(Vector3 playerPosition)
-    {
-        GameObject farthestMonster = null;
-        float farthestDistance = 0f;
-
-        foreach (Pool pool in pools)
-        {
-            foreach (GameObject monster in poolDictionary[pool.tag])
-            {
-                if (monster.activeInHierarchy)
-                {
-                    float distance = Vector3.Distance(playerPosition, monster.transform.position);
-
-                    if (distance > farthestDistance)
-                    {
-                        farthestDistance = distance;
-                        farthestMonster = monster;
-                    }
-                }
-            }
-        }
-
-        return farthestMonster;
     }
 }

@@ -17,15 +17,16 @@ public class MonsterController : MonoBehaviour
     public float monsterMoveSpeed;
     public float MonsterHP;
     public string monsterName;
-    public GameObject xpPrefab;
     public float Damage;
     public bool isStop;
 
+    private float RecordHP;
     private MonsterPools monsterPool;//怪物对象池
+    private ExpBallPool expballPool;//经验球对象池
 
-    private Coroutine monsterShakeCor;
     void Start()
     {
+        RecordHP = MonsterHP;
         monsterPool = GameObject.Find("GameController").GetComponent<MonsterPools>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         monsterRenderer = GetComponent<SpriteRenderer>();
@@ -79,19 +80,18 @@ public class MonsterController : MonoBehaviour
         {
             MonsterHP -= collision.GetComponent<FireBallManage>().FireBallDamage;
         }
-        monsterShakeCor= StartCoroutine(monsterShake());
         DestroyManage();
 
     }
     public void DestroyManage()//怪物血量小于等于0则删除
     {
-        StopCoroutine(monsterShakeCor);
         if (MonsterHP <= 0)
         {
+            MonsterHP = RecordHP;
             ReturnBird(monsterName);
             //获取游戏时间，时间越久最高经验球掉落概率越大
             //掉落经验xpPrefab
-            Instantiate(xpPrefab, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+            SpawnExp("Exp3");
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -132,34 +132,10 @@ public class MonsterController : MonoBehaviour
             isMove = !isMove;
         }
     }
-    public IEnumerator monsterShake()//怪物受伤闪烁
+    private void SpawnExp(string ExpName)//经验球对象池
     {
-        // 定义抖动效果的持续时间
-        float shakeDuration = 0.2f;
-
-        // 定义闪烁效果的持续时间
-        float blinkDuration = 0.1f;
-
-        // 定义闪烁效果之间的间隔
-        float blinkInterval = 0.05f;
-
-        // 在抖动效果的持续时间内，在起始位置和随机位置之间进行插值
-        for (float t = 0; t < shakeDuration; t += Time.deltaTime)
-        {
-            // 闪烁角色
-            if (t % blinkInterval < blinkDuration)
-            {
-                monsterRenderer.enabled = !monsterRenderer.enabled;
-            }
-            else
-            {
-                monsterRenderer.enabled = true;
-            }
-            yield return null;
-        }
-
-        // 确保Sprite可见
-        monsterRenderer.enabled = true;
+        GameObject ExpObj = monsterPool.GetObjectFromPool(ExpName);
+        ExpObj.transform.position = transform.position;
     }
     private void ReturnBird(string monsterName)//回收
     {

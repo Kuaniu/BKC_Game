@@ -1243,11 +1243,9 @@ GameObject:
   m_Component:
   - component: {fileID: 426432855}
   - component: {fileID: 426432854}
-  - component: {fileID: 426432856}
-  - component: {fileID: 426432857}
-  - component: {fileID: 426432859}
-  - component: {fileID: 426432858}
   - component: {fileID: 426432860}
+  - component: {fileID: 426432861}
+  - component: {fileID: 426432856}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -1301,48 +1299,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e92bfcf741f724140809693389f6151d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &426432857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 426432853}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f8dfabd5c7369640898f06ffd83c0fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  birdPrefab: {fileID: 7154363086291241433, guid: 92851804fad50224399a62faf1c1dfe2, type: 3}
-  poolSize: 10
---- !u!114 &426432858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 426432853}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 080ee8f4629f65f48a6377bbc9f6b393, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scarecrowPrefab: {fileID: 2932311041938317526, guid: d07edf364ee281142a4e1ef84aeadd31, type: 3}
-  poolSize: 10
---- !u!114 &426432859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 426432853}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f480e59ba4e50014f810349c8542dc11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hedgehogPrefab: {fileID: 7688450233684304388, guid: cdf5c78d53107c34988d5db270849f9e, type: 3}
-  poolSize: 10
 --- !u!114 &426432860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1364,7 +1320,29 @@ MonoBehaviour:
     size: 10
   - tag: Hed
     prefab: {fileID: 7688450233684304388, guid: cdf5c78d53107c34988d5db270849f9e, type: 3}
-    size: 0
+    size: 10
+--- !u!114 &426432861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426432853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd4002baf87eca408b4284cd760e11e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pools:
+  - tag: Exp3
+    prefab: {fileID: 8296485533287518207, guid: 19a5f7ee1d6693e4f9f01ba57118e050, type: 3}
+    size: 10
+  - tag: Exp2
+    prefab: {fileID: 1913990314124067131, guid: 4007eb89e5c0e4c448f959f5aeb59b85, type: 3}
+    size: 10
+  - tag: Exp1
+    prefab: {fileID: 3896130822480917696, guid: 880a1c1eea531c5439e8b2a5d9f0b095, type: 3}
+    size: 10
 --- !u!1 &478922081
 GameObject:
   m_ObjectHideFlags: 0

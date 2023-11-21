@@ -41,7 +41,6 @@ public class GameController : MonoBehaviour
         InvokeRepeating("ThreeStages", 60, 1);
         InvokeRepeating("FourStages", 120, 1);
 
-
         WeaponGeneration();//角色拥有的武器生成
     }
     void Update()

@@ -3,17 +3,17 @@ using UnityEngine;
 
 public class MonsterController : MonoBehaviour
 {
-    //»ñÈ¡½ÇÉ«transform
+    //è·å–è§’è‰²transform
     private Transform player;
 
-    //¹ÖÎïÊÇ·ñ½Ó´¥µ½½ÇÉ«
+    //æ€ªç‰©æ˜¯å¦æ¥è§¦åˆ°è§’è‰²
     private bool contact = false;
-    //»ñÈ¡¹ÖÎïRenderer
+    //è·å–æ€ªç‰©Renderer
     SpriteRenderer monsterRenderer;
-    //¸üĞÂ¹ÖÎïÊÇ·ñ¿ÉÒÔÒÆ¶¯
+    //æ›´æ–°æ€ªç‰©æ˜¯å¦å¯ä»¥ç§»åŠ¨
     private bool isMove = true;
 
-    //»ù±¾²ÎÊı
+    //åŸºæœ¬å‚æ•°
     public float monsterMoveSpeed;
     public float MonsterHP;
     public string monsterName;
@@ -21,8 +21,8 @@ public class MonsterController : MonoBehaviour
     public bool isStop;
 
     private float RecordHP;
-    private MonsterPools monsterPool;//¹ÖÎï¶ÔÏó³Ø
-    private ExpBallPool expballPool;//¾­ÑéÇò¶ÔÏó³Ø
+    private MonsterPools monsterPool;//æ€ªç‰©å¯¹è±¡æ± 
+    private ExpBallPool expballPool;//ç»éªŒçƒå¯¹è±¡æ± 
 
     void Start()
     {
@@ -31,22 +31,22 @@ public class MonsterController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         monsterRenderer = GetComponent<SpriteRenderer>();
 
-        //³ÖĞøÇĞ»»¹ÖÎïÊÇ·ñ¿ÉÒÔÒÆ¶¯
+        //æŒç»­åˆ‡æ¢æ€ªç‰©æ˜¯å¦å¯ä»¥ç§»åŠ¨
         if (isStop)
         {
             StartCoroutine("IsMoveUpdate");
         }
     }
-    private void FixedUpdate()//ÎïÀíÔË¶¯
+    private void FixedUpdate()//ç‰©ç†è¿åŠ¨
     {
-        //¹ÖÎïÏòÁ¿×·×Ù
+        //æ€ªç‰©å‘é‡è¿½è¸ª
         VectorTracing();
-        //¹ÖÎï¾àÀë¼ì²â
+        //æ€ªç‰©è·ç¦»æ£€æµ‹
         DistanceTracing();
     }
     void Update()
     {
-        //ĞŞ¸Ä¹ÖÎïÃæ³¯·½Ïò
+        //ä¿®æ”¹æ€ªç‰©é¢æœæ–¹å‘
         if (gameObject.transform.position.x > player.position.x)
         {
             monsterRenderer.flipX = true;
@@ -58,24 +58,24 @@ public class MonsterController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Åöµ½½ÇÉ«¼ì²â
+        //ç¢°åˆ°è§’è‰²æ£€æµ‹
         if (collision.gameObject.CompareTag("Player"))
         {
             contact = true;
         }
 
-        //Åöµ½ÎäÆ÷Boomerang¼ì²â
+        //ç¢°åˆ°æ­¦å™¨Boomerangæ£€æµ‹
         if (collision.gameObject.CompareTag("Boomerang"))
         {
             MonsterHP -= collision.GetComponent<BoomerangController>().BoomerangDamage;
         }
 
-        //Åöµ½ÎäÆ÷Dart¼ì²â
+        //ç¢°åˆ°æ­¦å™¨Dartæ£€æµ‹
         if (collision.gameObject.CompareTag("Dart"))
         {
             MonsterHP -= collision.GetComponent<DartController>().DartDamage;
         }
-        //Åöµ½ÎäÆ÷FireBall¼ì²â
+        //ç¢°åˆ°æ­¦å™¨FireBallæ£€æµ‹
         if (collision.gameObject.CompareTag("FireBall"))
         {
             MonsterHP -= collision.GetComponent<FireBallManage>().FireBallDamage;
@@ -83,41 +83,41 @@ public class MonsterController : MonoBehaviour
         DestroyManage();
 
     }
-    public void DestroyManage()//¹ÖÎïÑªÁ¿Ğ¡ÓÚµÈÓÚ0ÔòÉ¾³ı
+    public void DestroyManage()//æ€ªç‰©è¡€é‡å°äºç­‰äº0åˆ™åˆ é™¤
     {
         if (MonsterHP <= 0)
         {
             MonsterHP = RecordHP;
             ReturnBird(monsterName);
-            //»ñÈ¡ÓÎÏ·Ê±¼ä£¬Ê±¼äÔ½¾Ã×î¸ß¾­ÑéÇòµôÂä¸ÅÂÊÔ½´ó
-            //µôÂä¾­ÑéxpPrefab
+            //è·å–æ¸¸æˆæ—¶é—´ï¼Œæ—¶é—´è¶Šä¹…æœ€é«˜ç»éªŒçƒæ‰è½æ¦‚ç‡è¶Šå¤§
+            //æ‰è½ç»éªŒxpPrefab
             SpawnExp("Exp3");
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        //Àë¿ª½ÇÉ«¼ì²â
+        //ç¦»å¼€è§’è‰²æ£€æµ‹
         if (collision.gameObject.CompareTag("Player"))
         {
             contact = false;
         }
     }
 
-    public void VectorTracing()//¹ÖÎïÏòÁ¿×·×Ù
+    public void VectorTracing()//æ€ªç‰©å‘é‡è¿½è¸ª
     {
         if (!contact && isMove)
         {
             transform.position = Vector3.MoveTowards(transform.position, player.position, monsterMoveSpeed * Time.deltaTime);
         }
     }
-    public void DistanceTracing()//¹ÖÎï¾àÀë¼ì²â
+    public void DistanceTracing()//æ€ªç‰©è·ç¦»æ£€æµ‹
     {
         if (Vector2.Distance(player.transform.position, transform.position) >= 15)
         {
             ReturnBird(monsterName);
         }
     }
-    public IEnumerator IsMoveUpdate()//¸üĞÂ¹ÖÎïÊÇ·ñÒÆ¶¯
+    public IEnumerator IsMoveUpdate()//æ›´æ–°æ€ªç‰©æ˜¯å¦ç§»åŠ¨
     {
         while (true)
         {
@@ -132,12 +132,15 @@ public class MonsterController : MonoBehaviour
             isMove = !isMove;
         }
     }
-    private void SpawnExp(string ExpName)//¾­ÑéÇò¶ÔÏó³Ø
+    private void SpawnExp(string ExpName)//ç»éªŒçƒå¯¹è±¡æ± 
     {
         GameObject ExpObj = monsterPool.GetObjectFromPool(ExpName);
-        ExpObj.transform.position = transform.position;
+        if (ExpObj != null)
+        {
+            ExpObj.transform.position = transform.position;
+        }
     }
-    private void ReturnBird(string monsterName)//»ØÊÕ
+    private void ReturnBird(string monsterName)//å›æ”¶
     {
         monsterPool.ReturnObjectToPool(monsterName, gameObject);
     }

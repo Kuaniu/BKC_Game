@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.Constant;
 
 public class Exit : MonoBehaviour
 {
@@ -30,7 +31,7 @@ public class Exit : MonoBehaviour
 
     private void OnClickSettings()
     {
-        throw new NotImplementedException();
+        // throw new NotImplementedException();
     }
 
     private void OnClickContinueGame()

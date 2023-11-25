@@ -50,9 +50,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Scale: 2
+    - _Scale: 3
     - _Width: 20
     m_Colors:
     - _Color: {r: 8, g: 0.000002002716, b: 0, a: 0}
-    - _Speed: {r: 1, g: 0.5, b: 0, a: 0}
+    - _Speed: {r: 1.5, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []

@@ -5849,18 +5849,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6a85f1df2878a64387fef8ff122e5a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineRenderer: {fileID: 0}
-  lineRenderers: []
-  audioSource: {fileID: 0}
-  firePos: {x: 0, y: 0, z: 0}
-  xrayColor:
-    r: 0
-    g: 0
-    b: 1
-    a: 1
-  fireSpeed: 30
-  MaxRayWidth: 0.1
-  WidthExtendSpeed: 0.5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

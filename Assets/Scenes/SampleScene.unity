@@ -1265,10 +1265,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b962a4ec804ca4ab7031fc7e718600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 262938619}
   Bird: {fileID: 7154363086291241433, guid: 92851804fad50224399a62faf1c1dfe2, type: 3}
   Scarecrow: {fileID: 2932311041938317526, guid: d07edf364ee281142a4e1ef84aeadd31, type: 3}
   Hedgehog: {fileID: 7688450233684304388, guid: cdf5c78d53107c34988d5db270849f9e, type: 3}
-  Player: {fileID: 262938619}
   Dart: {fileID: 5818343508178420141, guid: 30d605b226cff02439056ada1fcfea2a, type: 3}
   Boomerang: {fileID: 6132997416541237090, guid: 3caa47708f696744a8b65f5a367f97bc, type: 3}
   FireBall: {fileID: 5624776289628315990, guid: 9bc74c12f4f24404b9ab389a2bb55b19, type: 3}

@@ -25,6 +25,9 @@ public class GameController : MonoBehaviour
 
     private MonsterPools monsterPool;//怪物池
 
+    private float DartTimeR = 0;
+    private float DartTime = 1;
+
     void Start()
     {
         //绑定、初始化
@@ -33,6 +36,7 @@ public class GameController : MonoBehaviour
         haveBoomerang = false;
         haveDart = true;
         haveFireBall = false;
+
 
         //从游戏运行的第n秒开始，每隔n秒执行一次函数OneStages函数
         InvokeRepeating("OneStages", 0, 1);
@@ -56,21 +60,25 @@ public class GameController : MonoBehaviour
                 haveDart = true;
                 break;
             case 2:
-                DartController.MoveSpeedUp();
+                DartController.DamageDouble();
                 break;
             case 3:
                 DartController.MoveSpeedUp();
                 break;
             case 4:
-                DartController.DamageDouble();
+                DartController.MoveSpeedUp();
                 break;
         }
     }
 
-
     //武器
     private void WeaponGeneration()
     {
+        if(Time.time- DartTimeR >= DartTime)
+        {
+            InstantiateDart();
+            DartTimeR = Time.time;
+        }
         if (haveDart)
         {
             InvokeRepeating("InstantiateDart", 0, 1f);
@@ -86,13 +94,14 @@ public class GameController : MonoBehaviour
         }
 
     }
-    private void InstantiateBoomerang()//回旋镖生成
-    {
-        Instantiate(Boomerang, Player.transform.position, Quaternion.identity, gameObject.transform);
-    }
+
     private void InstantiateDart()//飞镖生成
     {
         Instantiate(Dart, Player.transform.position, Quaternion.identity, gameObject.transform);
+    }
+    private void InstantiateBoomerang()//回旋镖生成
+    {
+        Instantiate(Boomerang, Player.transform.position, Quaternion.identity, gameObject.transform);
     }
     private void InstantiateFireBall()//火球生成
     {
@@ -216,17 +225,12 @@ public class GameController : MonoBehaviour
             SkillController.Instance.SetSkillUI(false);
         }
     }
-    private void SpawnMonster(string monsterName, Vector3 monsterPos)//对象池
-    {
-        GameObject monsterObj = monsterPool.GetObjectFromPool(monsterName);
-        monsterObj.transform.position = monsterPos;
-    }
+
+    //功能
     private void ReturnBird(string monsterName, GameObject monsterObj)//回收
     {
         monsterPool.ReturnObjectToPool(monsterName, monsterObj);
     }
-
-    //功能
     private int GenerateRandomNumber(int minRange, int maxRange)//指定随机数范围
     {
         // 如果所有数字都已经被排除，重新开始
@@ -246,6 +250,11 @@ public class GameController : MonoBehaviour
         excludedNumbers.Add(randomInt);
 
         return randomInt;
+    }
+    private void SpawnMonster(string monsterName, Vector3 monsterPos)//对象池
+    {
+        GameObject monsterObj = monsterPool.GetObjectFromPool(monsterName);
+        monsterObj.transform.position = monsterPos;
     }
 
 }

@@ -61,6 +61,7 @@ public class SkillController : MonoBehaviour
     private void OnSkillBtn1Click()
     {
         SetSkillUI(false);
+        GameObject.Find("GameController").GetComponent<GameController>().DartUpLevel();
         Debug.Log("Skill 1 Onclicked");
     }
 
@@ -82,5 +83,4 @@ public class SkillController : MonoBehaviour
     {
         SkillFirst.GetComponent<Image>().sprite = skill.SkillPic;
     }
-
 }

@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Experience") && Vector3.Distance(collision.transform.position, transform.position) <= 0.6f)
         {
             Experience += collision.gameObject.GetComponent<Experience>().xp;
-            Destroy(collision.gameObject);
+            collision.GetComponent<Experience>().ReturnExpBallPool();
         }
     }
     void playerMove()//½ÇÉ«ÒÆ¶¯ 

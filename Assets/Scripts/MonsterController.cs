@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MonsterController : MonoBehaviour
@@ -28,6 +29,8 @@ public class MonsterController : MonoBehaviour
     {
         RecordHP = MonsterHP;
         monsterPool = GameObject.Find("GameController").GetComponent<MonsterPools>();
+        expballPool = GameObject.Find("GameController").GetComponent<ExpBallPool>();
+
         player = GameObject.FindGameObjectWithTag("Player").transform;
         monsterRenderer = GetComponent<SpriteRenderer>();
 
@@ -73,7 +76,7 @@ public class MonsterController : MonoBehaviour
         //碰到武器Dart检测
         if (collision.gameObject.CompareTag("Dart"))
         {
-            MonsterHP -= collision.GetComponent<DartController>().DartDamage;
+            MonsterHP -= DartController.DartDamage;
         }
         //碰到武器FireBall检测
         if (collision.gameObject.CompareTag("FireBall"))
@@ -88,10 +91,10 @@ public class MonsterController : MonoBehaviour
         if (MonsterHP <= 0)
         {
             MonsterHP = RecordHP;
-            ReturnBird(monsterName);
+            ReturnMonster(monsterName);
             //获取游戏时间，时间越久最高经验球掉落概率越大
             //掉落经验xpPrefab
-            SpawnExp("Exp3");
+            SpawnExp();
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -114,7 +117,7 @@ public class MonsterController : MonoBehaviour
     {
         if (Vector2.Distance(player.transform.position, transform.position) >= 15)
         {
-            ReturnBird(monsterName);
+            ReturnMonster(monsterName);
         }
     }
     public IEnumerator IsMoveUpdate()//更新怪物是否移动
@@ -132,15 +135,29 @@ public class MonsterController : MonoBehaviour
             isMove = !isMove;
         }
     }
-    private void SpawnExp(string ExpName)//经验球对象池
+    private void SpawnExp()//经验球对象池
     {
-        GameObject ExpObj = monsterPool.GetObjectFromPool(ExpName);
-        if (ExpObj != null)
+        int Rnum=Random.Range(0, 100);//1-7.8-9.10
+        GameObject ExpObj;
+        if (Rnum<80)
         {
-            ExpObj.transform.position = transform.position;
+            ExpObj = expballPool.GetObjectFromPool("Exp4");
         }
+        else if(Rnum<90)
+        {
+            ExpObj = expballPool.GetObjectFromPool("Exp3");
+        }
+        else if (Rnum < 98)
+        {
+            ExpObj = expballPool.GetObjectFromPool("Exp2");
+        }
+        else
+        {
+            ExpObj = expballPool.GetObjectFromPool("Exp1");
+        }
+        ExpObj.transform.position = transform.position;
     }
-    private void ReturnBird(string monsterName)//回收
+    private void ReturnMonster(string monsterName)//回收
     {
         monsterPool.ReturnObjectToPool(monsterName, gameObject);
     }

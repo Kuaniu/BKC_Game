@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class DartController : MonoBehaviour
 {
+    public static int DartLevel=1;
     //武器攻击伤害
-    public float DartDamage;
+    public static float DartDamage=2.5f;
     //移动速度
-    public float MoveSpeed;
+    public static float MoveSpeed=10;
     private Transform player;
     private GameObject pos;
     private void Start()
@@ -27,6 +28,14 @@ public class DartController : MonoBehaviour
 
         //设置物体的rotation，只改变z值
         transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
+    }
+    public static void DamageDouble()
+    {
+        DartDamage *= 2;
+    }
+    public static void MoveSpeedUp()
+    {
+        MoveSpeed += 5;
     }
     private void FixedUpdate()
     {

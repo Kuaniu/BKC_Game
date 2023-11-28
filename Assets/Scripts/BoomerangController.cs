@@ -6,31 +6,32 @@ using UnityEngine;
 
 public class BoomerangController : MonoBehaviour
 {
-    //绑定刚体
-    private Rigidbody2D BoomerangRb;
-    //武器攻击伤害
-    public float BoomerangDamage;
-    //自转速度
-    public float rotation;
-    //移动速度
-    public float MoveSpeed;
-    //是否返回
-    public bool isReturn;
-    //是否第一次接触角色
-    public bool leave;
-    //角色
     private Transform player;
-
     private GameObject Thepos;
+    private Rigidbody2D BoomerangRb;
+
+    private float rotation;
+    private bool isReturn;
+    private bool leave;
+
+    public static float BoomerangDamage;
+    public static float MoveSpeed;
+
+
     private void Start()
     {
-        BoomerangRb = GetComponent<Rigidbody2D>();
-        isReturn = false;
         player = GameObject.Find("Player").GetComponent<Transform>();
+        Thepos = GameObject.Find("GameController").GetComponent<MonsterPools>().GetFarthestMonster(player.position);
+        BoomerangRb = GetComponent<Rigidbody2D>();
+
+        rotation = 20;
+        isReturn = false;
         leave = false;
 
+        BoomerangDamage = 5;
+        MoveSpeed = 1;
+
         InvokeRepeating("TimeDestroyGameobj", 5, 1);
-        Thepos = GameObject.Find("GameController").GetComponent<MonsterPools>().GetFarthestMonster(player.position);
     }
     private void FixedUpdate()
     {
@@ -47,9 +48,17 @@ public class BoomerangController : MonoBehaviour
             else
             {
                 pos = (player.position - transform.position).normalized;
-                BoomerangRb.velocity = pos * MoveSpeed * 10;
+                BoomerangRb.velocity = pos * MoveSpeed * 15;
             }
         }
+    }
+    public static void BoomerangDamageDouble()
+    {
+        BoomerangDamage *= 2;
+    }
+    public static void MoveSpeedUp()
+    {
+        MoveSpeed += 1;
     }
     private void OnTriggerExit2D(Collider2D collision)
     {

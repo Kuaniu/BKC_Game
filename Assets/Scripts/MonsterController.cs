@@ -70,7 +70,7 @@ public class MonsterController : MonoBehaviour
         //碰到武器Boomerang检测
         if (collision.gameObject.CompareTag("Boomerang"))
         {
-            MonsterHP -= collision.GetComponent<BoomerangController>().BoomerangDamage;
+            MonsterHP -= BoomerangController.BoomerangDamage;
         }
 
         //碰到武器Dart检测

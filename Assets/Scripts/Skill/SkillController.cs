@@ -65,20 +65,19 @@ public class SkillController : MonoBehaviour
     private void OnSkillBtn3Click()
     {
         SetSkillUI(false);
-        Debug.Log("Skill 3 Onclicked");
     }
 
     private void OnSkillBtn2Click()
     {
         SetSkillUI(false);
-        Debug.Log("Skill 2 Onclicked");
+        GameObject.Find("GameController").GetComponent<GameController>().BoomerangUpLevel();
+
     }
 
     private void OnSkillBtn1Click()
     {
         SetSkillUI(false);
         GameObject.Find("GameController").GetComponent<GameController>().DartUpLevel();
-        Debug.Log("Skill 1 Onclicked");
     }
 
     /// <summary>

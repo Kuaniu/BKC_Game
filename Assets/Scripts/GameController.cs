@@ -1,9 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-//using TMPro.EditorUtilities;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 public class GameController : MonoBehaviour
 {
@@ -25,15 +21,19 @@ public class GameController : MonoBehaviour
 
     private MonsterPools monsterPool;//怪物池
 
+    private int DartLevel = 1;
     private float DartTimeR = 0;
-    private float DartTime = 1;
+    private float DartTime = 0.5f;
+    private int BoomerangLevel = 0;
+    private float BoomerangTimeR = 0;
+    private float BoomerangTime = 2;
+    private bool isBoomerangDouble = false;
 
     void Start()
     {
         //绑定、初始化
         monsterPool = GetComponent<MonsterPools>();
 
-        haveBoomerang = false;
         haveDart = true;
         haveFireBall = false;
 
@@ -44,54 +44,89 @@ public class GameController : MonoBehaviour
         InvokeRepeating("ThreeStages", 60, 1);
         InvokeRepeating("FourStages", 120, 1);
 
-        WeaponGeneration();//角色拥有的武器生成
     }
     void Update()
     {
+        WeaponGeneration();//角色拥有的武器生成
+
         TextStages();
     }
 
     public void DartUpLevel()
     {
-        DartController.DartLevel += 1;
-        switch (DartController.DartLevel)
+        DartLevel += 1;
+        switch (DartLevel)
         {
             case 1:
+                print("Dart is true");
                 haveDart = true;
                 break;
             case 2:
-                DartController.DamageDouble();
+                print("DartTime =0.4s");
+                DartTime = 0.4f;
+                DartController.MoveSpeedUp();
                 break;
             case 3:
+                print("DartTime =0.2s");
+                DartTime = 0.2f;
                 DartController.MoveSpeedUp();
                 break;
             case 4:
-                DartController.MoveSpeedUp();
+                print("Dart damage double");
+                DartController.DamageDouble();
                 break;
         }
     }
-
+    public void BoomerangUpLevel()
+    {
+        BoomerangLevel += 1;
+        switch (BoomerangLevel)
+        {
+            case 1:
+                print("Boomerang is true");
+                haveBoomerang = true;
+                break;
+            case 2:
+                print("Boomerang num is double");
+                isBoomerangDouble = true;
+                break;
+            case 3:
+                print("BoomerangTime -=0.2s");
+                BoomerangTime -= 0.2f;
+                BoomerangController.MoveSpeedUp();
+                break;
+            case 4:
+                print("Boomerang damage double");
+                BoomerangController.BoomerangDamageDouble();
+                break;
+        }
+    }
     //武器
     private void WeaponGeneration()
     {
-        if(Time.time- DartTimeR >= DartTime)
+        if (haveDart && Time.time - DartTimeR >= DartTime)
         {
             InstantiateDart();
             DartTimeR = Time.time;
         }
-        if (haveDart)
+        if (haveBoomerang && Time.time - BoomerangTimeR >= BoomerangTime)
         {
-            InvokeRepeating("InstantiateDart", 0, 1f);
+            InstantiateBoomerang(isBoomerangDouble);
+            BoomerangTimeR = Time.time;
         }
+        //if (haveDart)
+        //{
+        //    InvokeRepeating("InstantiateDart", 0, 1f);
+        //}
 
-        if (haveBoomerang)
-        {
-            InvokeRepeating("InstantiateBoomerang", 0, 3f);
-        }
-        if (haveFireBall)
-        {
-            InstantiateFireBall();
-        }
+        //if (haveBoomerang)
+        //{
+        //    InvokeRepeating("InstantiateBoomerang", 0, 3f);
+        //}
+        //if (haveFireBall)
+        //{
+        //    InstantiateFireBall();
+        //}
 
     }
 
@@ -99,15 +134,27 @@ public class GameController : MonoBehaviour
     {
         Instantiate(Dart, Player.transform.position, Quaternion.identity, gameObject.transform);
     }
-    private void InstantiateBoomerang()//回旋镖生成
+    private void InstantiateBoomerang(bool isDouble)//回旋镖生成
     {
-        Instantiate(Boomerang, Player.transform.position, Quaternion.identity, gameObject.transform);
+        if(isDouble)
+        {
+            Instantiate(Boomerang, Player.transform.position, Quaternion.identity, gameObject.transform);
+            Invoke("doubleBoomerang", 0.2f);
+        }
+        else
+        {
+            Instantiate(Boomerang, Player.transform.position, Quaternion.identity, gameObject.transform);
+        }
     }
     private void InstantiateFireBall()//火球生成
     {
         Instantiate(FireBall, Player.transform);
     }
 
+    private void DoubleBoomerang()
+    {
+        Instantiate(Boomerang, Player.transform.position, Quaternion.identity, gameObject.transform);
+    }
     //阵列
     private void UpFormation(string monsterName, int Count)
     {

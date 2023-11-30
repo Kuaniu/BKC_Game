@@ -22,12 +22,15 @@ public class DartController : MonoBehaviour
     }
     private void SetDartRotation()
     {
-        //面朝怪物
-        //计算物体应该旋转到面朝目标物体的角度
-        Vector3 targetDirection = Pos.transform.position - gameObject.transform.position;
-        float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
-        //设置物体的rotation，只改变z值
-        transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
+        if (Pos)
+        {
+            //面朝怪物
+            //计算物体应该旋转到面朝目标物体的角度
+            Vector3 targetDirection = Pos.transform.position - gameObject.transform.position;
+            float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
+            //设置物体的rotation，只改变z值
+            transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
+        }
     }
     public static void DamageDouble()
     {
@@ -40,7 +43,10 @@ public class DartController : MonoBehaviour
     private void FixedUpdate()
     {
         //武器移动
-        transform.position = Vector3.MoveTowards(transform.position, Pos.transform.position, MoveSpeed * Time.deltaTime);
+        if(Pos)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, Pos.transform.position, MoveSpeed * Time.deltaTime);
+        }
     }
     private void TimeDestroyGameobj()    //时间过长删除自身
     {

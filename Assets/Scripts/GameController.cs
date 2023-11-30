@@ -39,16 +39,15 @@ public class GameController : MonoBehaviour
 
 
         //从游戏运行的第n秒开始，每隔n秒执行一次函数OneStages函数
-        InvokeRepeating("OneStages", 0, 1);
-        InvokeRepeating("TwoStages", 30, 1);
-        InvokeRepeating("ThreeStages", 60, 1);
-        InvokeRepeating("FourStages", 120, 1);
+        InvokeRepeating("OneStages", 0, 3);
+        InvokeRepeating("TwoStages", 30, 8);
+        InvokeRepeating("ThreeStages", 60, 8);
+        InvokeRepeating("FourStages", 120, 10);
 
     }
     void Update()
     {
-        WeaponGeneration();//角色拥有的武器生成
-
+        WeaponSpawn();
         TextStages();
     }
 
@@ -101,8 +100,9 @@ public class GameController : MonoBehaviour
                 break;
         }
     }
+    
     //武器
-    private void WeaponGeneration()
+    private void WeaponSpawn()
     {
         if (haveDart && Time.time - DartTimeR >= DartTime)
         {
@@ -129,7 +129,6 @@ public class GameController : MonoBehaviour
         //}
 
     }
-
     private void InstantiateDart()//飞镖生成
     {
         Instantiate(Dart, Player.transform.position, Quaternion.identity, gameObject.transform);
@@ -150,11 +149,11 @@ public class GameController : MonoBehaviour
     {
         Instantiate(FireBall, Player.transform);
     }
-
     private void DoubleBoomerang()
     {
         Instantiate(Boomerang, Player.transform.position, Quaternion.identity, gameObject.transform);
     }
+
     //阵列
     private void UpFormation(string monsterName, int Count)
     {

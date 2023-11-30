@@ -40,7 +40,7 @@ public class MonsterController : MonoBehaviour
             StartCoroutine("IsMoveUpdate");
         }
     }
-    private void FixedUpdate()//物理运动
+    private void FixedUpdate()
     {
         //怪物向量追踪
         VectorTracing();
@@ -49,7 +49,10 @@ public class MonsterController : MonoBehaviour
     }
     void Update()
     {
-        //修改怪物面朝方向
+        MonsterFace();
+    }
+    private void MonsterFace()//修改怪物面朝方向
+    {
         if (gameObject.transform.position.x > player.position.x)
         {
             monsterRenderer.flipX = true;
@@ -86,17 +89,6 @@ public class MonsterController : MonoBehaviour
         DestroyManage();
 
     }
-    public void DestroyManage()//怪物血量小于等于0则删除
-    {
-        if (MonsterHP <= 0)
-        {
-            MonsterHP = RecordHP;
-            ReturnMonster(monsterName);
-            //获取游戏时间，时间越久最高经验球掉落概率越大
-            //掉落经验xpPrefab
-            SpawnExp();
-        }
-    }
     private void OnTriggerExit2D(Collider2D collision)
     {
         //离开角色检测
@@ -105,7 +97,15 @@ public class MonsterController : MonoBehaviour
             contact = false;
         }
     }
-
+    private void DestroyManage()//怪物血量判断
+    {
+        if (MonsterHP <= 0)
+        {
+            MonsterHP = RecordHP;
+            ReturnMonster(monsterName);
+            SpawnExp();
+        }
+    }
     public void VectorTracing()//怪物向量追踪
     {
         if (!contact && isMove)

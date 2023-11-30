@@ -38,7 +38,7 @@ public class BoomerangController : MonoBehaviour
         //ÎäÆ÷×Ô×ª
         transform.Rotate(Vector3.forward, rotation);
 
-        if (Thepos.transform.position != Vector3.zero)
+        if (Thepos && Thepos.transform.position != Vector3.zero)
         {
             Vector2 pos = (Thepos.transform.position - transform.position).normalized;
             if (!isReturn)

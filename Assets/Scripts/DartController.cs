@@ -31,6 +31,10 @@ public class DartController : MonoBehaviour
             //设置物体的rotation，只改变z值
             transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
         }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
     public static void DamageDouble()
     {

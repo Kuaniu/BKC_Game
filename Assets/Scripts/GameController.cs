@@ -61,13 +61,13 @@ public class GameController : MonoBehaviour
                 haveDart = true;
                 break;
             case 2:
-                print("DartTime =0.4s");
-                DartTime = 0.4f;
+                print("DartTime =0.45s");
+                DartTime = 0.45f;
                 DartController.MoveSpeedUp();
                 break;
             case 3:
-                print("DartTime =0.2s");
-                DartTime = 0.2f;
+                print("DartTime =0.3s");
+                DartTime = 0.3f;
                 DartController.MoveSpeedUp();
                 break;
             case 4:
@@ -138,7 +138,7 @@ public class GameController : MonoBehaviour
         if(isDouble)
         {
             Instantiate(Boomerang, Player.transform.position, Quaternion.identity, gameObject.transform);
-            Invoke("doubleBoomerang", 0.2f);
+            Invoke("DoubleBoomerang", 0.1f);
         }
         else
         {

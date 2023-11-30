@@ -51,6 +51,10 @@ public class BoomerangController : MonoBehaviour
                 BoomerangRb.velocity = pos * MoveSpeed * 15;
             }
         }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
     public static void BoomerangDamageDouble()
     {

@@ -84,7 +84,7 @@ public class MonsterController : MonoBehaviour
         //碰到武器FireBall检测
         if (collision.gameObject.CompareTag("FireBall"))
         {
-            MonsterHP -= collision.GetComponent<FireBallManage>().FireBallDamage;
+            MonsterHP -= FireBallManage.FireBallDamage;
         }
         DestroyManage();
 

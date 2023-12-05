@@ -6,12 +6,6 @@ using static UnityEngine.GraphicsBuffer;
 public class FollowPlayer : MonoBehaviour
 {
     public Transform target;
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     private void FixedUpdate()
     {
         Follow();

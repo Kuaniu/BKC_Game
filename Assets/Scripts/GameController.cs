@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -21,12 +22,18 @@ public class GameController : MonoBehaviour
 
     private MonsterPools monsterPool;//怪物池
 
-    private int DartLevel = 1;
     private float DartTimeR = 0;
-    private float DartTime = 0.5f;
-    private int BoomerangLevel = 0;
     private float BoomerangTimeR = 0;
+
+    private float DartTime = 0.5f;
     private float BoomerangTime = 2;
+
+    private int DartLevel = 1;
+    private int BoomerangLevel = 0;
+    private int FireBallLevel = 0;
+
+    private int FireBallNum = 1;
+
     private bool isBoomerangDouble = false;
 
     void Start()
@@ -100,7 +107,30 @@ public class GameController : MonoBehaviour
                 break;
         }
     }
-    
+    public void FireBallUpLevel()
+    {
+        FireBallLevel += 1;
+        switch (FireBallLevel)
+        {
+            case 1:
+                print("HaveFireBall");
+                haveFireBall = true;
+                break;
+            case 2:
+                print("FireBallDamageUp");
+                FireBallManage.SetDamage();
+                break;
+            case 3:
+                print("FireBallSpeedUp");
+                FireBallManage.SetMoveSpeed();
+                break;
+            case 4:
+                print("FireBallBig");
+                FireBallManage.SetScale();
+                break;
+        }
+    }
+
     //武器
     private void WeaponSpawn()
     {
@@ -113,6 +143,10 @@ public class GameController : MonoBehaviour
         {
             InstantiateBoomerang(isBoomerangDouble);
             BoomerangTimeR = Time.time;
+        }
+        if (haveFireBall)
+        {
+            InstantiateFireBall();
         }
         //if (haveDart)
         //{
@@ -135,7 +169,7 @@ public class GameController : MonoBehaviour
     }
     private void InstantiateBoomerang(bool isDouble)//回旋镖生成
     {
-        if(isDouble)
+        if (isDouble)
         {
             Instantiate(Boomerang, Player.transform.position, Quaternion.identity, gameObject.transform);
             Invoke("DoubleBoomerang", 0.1f);
@@ -147,7 +181,11 @@ public class GameController : MonoBehaviour
     }
     private void InstantiateFireBall()//火球生成
     {
-        Instantiate(FireBall, Player.transform);
+        if (FireBallNum < 2)
+        {
+            Instantiate(FireBall, Player.transform);
+            FireBallNum++;
+        }
     }
     private void DoubleBoomerang()
     {
@@ -248,19 +286,12 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Alpha1))
         {
-            OneStages();
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha2))
-        {
-            TwoStages();
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha3))
-        {
-            ThreeStages();
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha4))
-        {
-            FourStages();
+            Skill skill = new Skill()
+            {
+                SkillPic = null,
+                CurrentLevel = 1
+            };
+            SkillController.Instance.SetSkillFirst(skill);
         }
         if (Input.GetKeyUp(KeyCode.Alpha5))
         {

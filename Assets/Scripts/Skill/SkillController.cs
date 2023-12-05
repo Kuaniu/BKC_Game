@@ -64,6 +64,7 @@ public class SkillController : MonoBehaviour
 
     private void OnSkillBtn3Click()
     {
+        GameObject.Find("GameController").GetComponent<GameController>().FireBallUpLevel();
         SetSkillUI(false);
     }
 

@@ -46,16 +46,69 @@ public class GameController : MonoBehaviour
 
 
         //从游戏运行的第n秒开始，每隔n秒执行一次函数OneStages函数
-        InvokeRepeating("OneStages", 0, 3);
-        InvokeRepeating("TwoStages", 30, 8);
-        InvokeRepeating("ThreeStages", 60, 8);
-        InvokeRepeating("FourStages", 120, 10);
+        InvokeRepeating("OneStages", 0, 2);
+        InvokeRepeating("TwoStages", 30, 4);
+
+        InvokeRepeating("BirdBirdBird", 60, 2);
+
+        InvokeRepeating("ThreeStages", 120, 8);
+        InvokeRepeating("FourStages", 180, 10);
 
     }
     void Update()
     {
         WeaponSpawn();
         TextStages();
+    }
+
+
+
+    //武器
+    private void WeaponSpawn()
+    {
+        if (haveDart && Time.time - DartTimeR >= DartTime)
+        {
+            InstantiateDart();
+            DartTimeR = Time.time;
+        }
+        if (haveBoomerang && Time.time - BoomerangTimeR >= BoomerangTime)
+        {
+            InstantiateBoomerang(isBoomerangDouble);
+            BoomerangTimeR = Time.time;
+        }
+        if (haveFireBall)
+        {
+            InstantiateFireBall();
+        }
+
+    }
+    private void InstantiateDart()//飞镖生成
+    {
+        Instantiate(Dart, Player.transform.position, Quaternion.identity, gameObject.transform);
+    }
+    private void InstantiateBoomerang(bool isDouble)//回旋镖生成
+    {
+        if (isDouble)
+        {
+            Instantiate(Boomerang, Player.transform.position, Quaternion.identity, gameObject.transform);
+            Invoke("DoubleBoomerang", 0.1f);
+        }
+        else
+        {
+            Instantiate(Boomerang, Player.transform.position, Quaternion.identity, gameObject.transform);
+        }
+    }
+    private void InstantiateFireBall()//火球生成
+    {
+        if (FireBallNum < 2)
+        {
+            Instantiate(FireBall, Player.transform);
+            FireBallNum++;
+        }
+    }
+    private void DoubleBoomerang()
+    {
+        Instantiate(Boomerang, Player.transform.position, Quaternion.identity, gameObject.transform);
     }
 
     public void DartUpLevel()
@@ -131,67 +184,6 @@ public class GameController : MonoBehaviour
         }
     }
 
-    //武器
-    private void WeaponSpawn()
-    {
-        if (haveDart && Time.time - DartTimeR >= DartTime)
-        {
-            InstantiateDart();
-            DartTimeR = Time.time;
-        }
-        if (haveBoomerang && Time.time - BoomerangTimeR >= BoomerangTime)
-        {
-            InstantiateBoomerang(isBoomerangDouble);
-            BoomerangTimeR = Time.time;
-        }
-        if (haveFireBall)
-        {
-            InstantiateFireBall();
-        }
-        //if (haveDart)
-        //{
-        //    InvokeRepeating("InstantiateDart", 0, 1f);
-        //}
-
-        //if (haveBoomerang)
-        //{
-        //    InvokeRepeating("InstantiateBoomerang", 0, 3f);
-        //}
-        //if (haveFireBall)
-        //{
-        //    InstantiateFireBall();
-        //}
-
-    }
-    private void InstantiateDart()//飞镖生成
-    {
-        Instantiate(Dart, Player.transform.position, Quaternion.identity, gameObject.transform);
-    }
-    private void InstantiateBoomerang(bool isDouble)//回旋镖生成
-    {
-        if (isDouble)
-        {
-            Instantiate(Boomerang, Player.transform.position, Quaternion.identity, gameObject.transform);
-            Invoke("DoubleBoomerang", 0.1f);
-        }
-        else
-        {
-            Instantiate(Boomerang, Player.transform.position, Quaternion.identity, gameObject.transform);
-        }
-    }
-    private void InstantiateFireBall()//火球生成
-    {
-        if (FireBallNum < 2)
-        {
-            Instantiate(FireBall, Player.transform);
-            FireBallNum++;
-        }
-    }
-    private void DoubleBoomerang()
-    {
-        Instantiate(Boomerang, Player.transform.position, Quaternion.identity, gameObject.transform);
-    }
-
     //阵列
     private void UpFormation(string monsterName, int Count)
     {
@@ -246,6 +238,7 @@ public class GameController : MonoBehaviour
         LeftFormation("Sca", 1);
         RightFormation("Sca", 1);
 
+        CancelInvoke("OneStages");
     }
     private void ThreeStages()
     {
@@ -264,6 +257,7 @@ public class GameController : MonoBehaviour
         LeftFormation("Hed", 1);
         RightFormation("Hed", 1);
 
+        CancelInvoke("BirdBirdBird");
     }
     private void FourStages()
     {
@@ -281,6 +275,17 @@ public class GameController : MonoBehaviour
         DownFormation("Hed", 1);
         LeftFormation("Hed", 1);
         RightFormation("Hed", 1);
+
+        CancelInvoke("ThreeStages");
+    }
+    private void BirdBirdBird()
+    {
+        UpFormation("Bird", 10);
+        DownFormation("Bird", 10);
+        LeftFormation("Bird", 10);
+        RightFormation("Bird", 10);
+
+        CancelInvoke("TwoStages");
     }
     private void TextStages()
     {

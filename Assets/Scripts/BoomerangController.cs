@@ -21,7 +21,6 @@ public class BoomerangController : MonoBehaviour
     private void Start()
     {
         player = GameObject.Find("Player").GetComponent<Transform>();
-        Thepos = GameObject.Find("GameController").GetComponent<MonsterPools>().GetFarthestMonster(player.position);
         BoomerangRb = GetComponent<Rigidbody2D>();
 
         rotation = 20;
@@ -31,13 +30,13 @@ public class BoomerangController : MonoBehaviour
         BoomerangDamage = 5;
         MoveSpeed = 1;
 
-        InvokeRepeating("TimeDestroyGameobj", 5, 1);
+        InvokeRepeating("TimeDestroyGameobj", 10, 1);
     }
     private void FixedUpdate()
     {
         //ÎäÆ÷×Ô×ª
         transform.Rotate(Vector3.forward, rotation);
-
+        Thepos = GameObject.Find("GameController").GetComponent<MonsterPools>().GetFarthestMonster(player.position);
         if (Thepos && Thepos.transform.position != Vector3.zero)
         {
             Vector2 pos = (Thepos.transform.position - transform.position).normalized;
@@ -75,7 +74,7 @@ public class BoomerangController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Monster")&& leave)
         {
-            isReturn = true;
+            //isReturn = true;
         }
         if (collision.gameObject.CompareTag("Player") && leave)
         {

@@ -52,7 +52,7 @@ public class GameController : MonoBehaviour
         InvokeRepeating("BirdBirdBird", 60, 2);
 
         InvokeRepeating("ThreeStages", 120, 8);
-        InvokeRepeating("FourStages", 180, 10);
+        InvokeRepeating("FourStages", 180, 2);
 
     }
     void Update()
@@ -114,74 +114,110 @@ public class GameController : MonoBehaviour
     public void DartUpLevel()
     {
         DartLevel += 1;
-        switch (DartLevel)
+        print(DartLevel);
+        if(DartLevel<5)
         {
-            case 1:
-                print("Dart is true");
-                haveDart = true;
-                break;
-            case 2:
-                print("DartTime =0.45s");
-                DartTime = 0.45f;
-                DartController.MoveSpeedUp();
-                break;
-            case 3:
-                print("DartTime =0.3s");
-                DartTime = 0.3f;
-                DartController.MoveSpeedUp();
-                break;
-            case 4:
-                print("Dart damage double");
-                DartController.DamageDouble();
-                break;
+            Skill DartSkill = new Skill()
+            {
+                SkillPic = Resources.Load<Sprite>("Skill_Details"),
+                CurrentLevel = DartLevel
+            };
+            SkillController.Instance.SetSkillFirst(DartSkill);
+
+            switch (DartLevel)
+            {
+                case 1:
+                    print("Dart is true");
+                    haveDart = true;
+                    break;
+                case 2:
+                    print("DartTime =0.45s");
+                    DartTime = 0.45f;
+                    DartController.MoveSpeedUp();
+                    break;
+                case 3:
+                    print("DartTime =0.3s");
+                    DartTime = 0.3f;
+                    DartController.MoveSpeedUp();
+                    break;
+                case 4:
+                    print("Dart damage double");
+                    DartController.DamageDouble();
+                    break;
+            }
         }
+        
     }
     public void BoomerangUpLevel()
     {
         BoomerangLevel += 1;
-        switch (BoomerangLevel)
+        print(BoomerangLevel);
+        if(BoomerangLevel<5)
         {
-            case 1:
-                print("Boomerang is true");
-                haveBoomerang = true;
-                break;
-            case 2:
-                print("Boomerang num is double");
-                isBoomerangDouble = true;
-                break;
-            case 3:
-                print("BoomerangTime -=0.2s");
-                BoomerangTime -= 0.2f;
-                BoomerangController.MoveSpeedUp();
-                break;
-            case 4:
-                print("Boomerang damage double");
-                BoomerangController.BoomerangDamageDouble();
-                break;
+            Skill BoomerangSkill = new Skill()
+            {
+                SkillPic = Resources.Load<Sprite>("Skill_Details"),
+                CurrentLevel = BoomerangLevel
+            };
+            SkillController.Instance.SetSkillSecond(BoomerangSkill);
+
+            switch (BoomerangLevel)
+            {
+                case 1:
+                    print("Boomerang is true");
+                    haveBoomerang = true;
+                    break;
+                case 2:
+                    print("Boomerang num is double");
+                    isBoomerangDouble = true;
+                    break;
+                case 3:
+                    print("BoomerangTime -=0.2s");
+                    BoomerangTime -= 0.2f;
+                    BoomerangController.MoveSpeedUp();
+                    break;
+                case 4:
+                    print("Boomerang damage double");
+                    BoomerangController.BoomerangDamageDouble();
+                    break;
+            }
         }
+        
     }
     public void FireBallUpLevel()
     {
         FireBallLevel += 1;
-        switch (FireBallLevel)
+        print(FireBallLevel);
+        if(FireBallLevel<5)
         {
-            case 1:
-                print("HaveFireBall");
-                haveFireBall = true;
-                break;
-            case 2:
-                print("FireBallDamageUp");
-                FireBallManage.SetDamage();
-                break;
-            case 3:
-                print("FireBallSpeedUp");
-                FireBallManage.SetMoveSpeed();
-                break;
-            case 4:
-                print("FireBallBig");
-                FireBallManage.SetScale();
-                break;
+            Skill FireBallSkill = new Skill()
+            {
+                SkillPic = Resources.Load<Sprite>("Skill_Details"),
+                CurrentLevel = DartLevel
+            };
+            SkillController.Instance.SetSkillThird(FireBallSkill);
+
+            switch (FireBallLevel)
+            {
+                case 1:
+                    print("HaveFireBall");
+                    haveFireBall = true;
+                    break;
+                case 2:
+                    print("FireBallDamageUp");
+                    FireBallManage.SetDamage();
+                    break;
+                case 3:
+                    print("FireBallSpeedUp");
+                    FireBallManage.SetMoveSpeed();
+                    break;
+                case 4:
+                    print("FireBallBig");
+                    FireBallManage.SetScale();
+                    break;
+            }
         }
+
     }
 
     //еѓСа

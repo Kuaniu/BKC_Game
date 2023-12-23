@@ -1362,6 +1362,7 @@ GameObject:
   - component: {fileID: 426432860}
   - component: {fileID: 426432861}
   - component: {fileID: 426432856}
+  - component: {fileID: 426432862}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -1462,6 +1463,20 @@ MonoBehaviour:
   - tag: Exp4
     prefab: {fileID: 8296485533287518207, guid: bfa923050b3444b4499168f868bec8d0, type: 3}
     size: 100
+--- !u!114 &426432862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426432853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2ccf7a898931b2468b742f8dc13d98c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Map1: {fileID: 1718337836}
+  Map2: {fileID: 261623847}
 --- !u!1 &478922081
 GameObject:
   m_ObjectHideFlags: 0
@@ -3699,7 +3714,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -0.4499941, y: -50}
+  m_AnchoredPosition: {x: -0.44999695, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: -1.03, y: 0.5}
 --- !u!114 &1189433424

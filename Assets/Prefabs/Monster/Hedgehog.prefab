@@ -766,8 +766,8 @@ GameObject:
   - component: {fileID: 41645985855136601}
   - component: {fileID: 6455006805552744381}
   - component: {fileID: 1379788742020733677}
-  - component: {fileID: 7250935810786192406}
   - component: {fileID: 6527540706829186702}
+  - component: {fileID: 7250935810786192406}
   - component: {fileID: 5544902456188132999}
   m_Layer: 0
   m_Name: Hedgehog
@@ -874,7 +874,6 @@ MonoBehaviour:
   monsterMoveSpeed: 0.5
   MonsterHP: 20
   monsterName: Hed
-  xpPrefab: {fileID: 3896130822480917696, guid: 880a1c1eea531c5439e8b2a5d9f0b095, type: 3}
   Damage: 4
   isStop: 0
 --- !u!50 &1379788742020733677
@@ -904,27 +903,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!95 &7250935810786192406
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7688450233684304388}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d1bccd38d5c8596408bf3c0809f45f54, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &6527540706829186702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -972,6 +950,27 @@ MonoBehaviour:
     m_Extent: {x: 0.53499985, y: 0.41288093, z: 0}
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
+--- !u!95 &7250935810786192406
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7688450233684304388}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d1bccd38d5c8596408bf3c0809f45f54, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!61 &5544902456188132999
 BoxCollider2D:
   m_ObjectHideFlags: 0
